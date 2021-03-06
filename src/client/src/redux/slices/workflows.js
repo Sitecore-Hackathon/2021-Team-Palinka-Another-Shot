@@ -1,21 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getWorkflowDetails } from "../../services/apis";
+import getWorkflowApi from "../../services/apis";
 
 export const initialState = {
   loading: false,
   hasErrors: false,
-  workItems: {},
+  workflowItems: [],
 };
 
-const workItemsSlice = createSlice({
-  name: "workItems",
+const workflowSlice = createSlice({
+  name: "workflowItems",
   initialState,
   reducers: {
     getItems: state => {
       state.loading = true;
     },
     getItemsSuccess: (state, { payload }) => {
-      state.workItems = payload;
+      state.workflowItems = payload;
       state.loading = false;
       state.hasErrors = false;
     },
@@ -26,14 +26,14 @@ const workItemsSlice = createSlice({
   },
 });
 
-export const { getItems, getItemsSuccess, getItemsFailure } = workItemsSlice.actions;
+export const { getItems, getItemsSuccess, getItemsFailure } = workflowSlice.actions;
 
-export const workItemsSelector = state => state.workItems;
+export const workflowSelector = state => state.workflowItems;
 
-export default workItemsSlice.reducer;
+export default workflowSlice.reducer;
 
-export function fetchWorkItems(id) {
-  const url = getWorkflowDetails().replace("{workflowid}", id);
+export function fetchWorkflows() {
+  const url = getWorkflowApi();
 
   return async dispatch => {
     dispatch(getItems());
