@@ -3,7 +3,7 @@ import { Draggable } from "react-beautiful-dnd";
 
 const WorkItem = (props) => {
   return (
-    <Draggable draggableId={props.task.id} index={props.index}>
+    <Draggable draggableId={props.item.ID} index={props.index}>
       {(provided, snapshot) => (
         <div
           className={`work-item ${snapshot.isDragging ? 'work-item--is-dragging' : ''}`}
@@ -11,7 +11,7 @@ const WorkItem = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {props.task.content}
+          {props.item.Name}
         </div>
       )}
     </Draggable>

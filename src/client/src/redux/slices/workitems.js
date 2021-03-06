@@ -4,7 +4,7 @@ import { getWorkflowDetails } from "../../services/apis";
 export const initialState = {
   loading: false,
   hasErrors: false,
-  workItems: [],
+  workItems: {},
 };
 
 const workItemsSlice = createSlice({

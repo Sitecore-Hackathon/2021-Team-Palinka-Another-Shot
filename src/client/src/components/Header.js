@@ -15,6 +15,14 @@ const Header = () => {
     dispatch(fetchWorkflows());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (selectedOptionId === 0 && workflowItems.length > 0) {
+      const selectedOption = workflowItems.filter(option => option.IsSelected === true);
+      setSelectedOptionId(selectedOption[0].Id);
+      dispatch(fetchWorkItems(selectedOptionId));
+    }
+  }, [dispatch, selectedOptionId, workflowItems]);
+
   const onChange = (option, { action }) => {
     if (action === "select-option") {
       dispatch(fetchWorkItems(option.Id));
@@ -22,12 +30,6 @@ const Header = () => {
   };
 
   const renderQuickFilters = () => {
-    if (selectedOptionId === 0 && workflowItems.length > 0) {
-      const selectedOption = workflowItems.filter(option => option.IsSelected === true);
-      setSelectedOptionId(selectedOption[0].Id);
-      dispatch(fetchWorkItems(selectedOptionId));
-    }
-
     if (!workItems.QuickFilters) {
       return (
         <div className="col col-no-gutter">&nbsp;</div>
