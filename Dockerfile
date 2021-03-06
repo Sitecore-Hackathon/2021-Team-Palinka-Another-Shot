@@ -43,7 +43,7 @@ RUN msbuild .\src\feature\workbox\code\Feature.Workbox.csproj /p:Configuration=$
 
 WORKDIR c:\build\src\client
 RUN npm install
-RUN npm build
+RUN npm run build
 RUN npm run toaspx
 
 # Save the artifacts for copying into other images (see 'cm' and 'rendering' Dockerfiles).
