@@ -6,6 +6,7 @@ import Column from "./Column";
 
 const Board = () => {
   const [data, setData] = useState(null);
+  const [enabledStateIds, setEnabledIds] = useState([0, []]);
   const { workItems } = useSelector(workItemsSelector);
 
   useEffect(() => {
@@ -31,8 +32,38 @@ const Board = () => {
     });
   };
 
+  const getNextStateIds = (itemId, stateId) => {
+    const state = data.States.filter(state => {
+      return state.Id === stateId;
+    })[0];
+
+    const item = state.Items.filter(item => {
+      return item.ID === itemId;
+    })[0];
+
+    const nextStateIds = [];
+
+    item.NextStates.forEach(nextState => {
+      nextStateIds.push(nextState.Id);
+    });
+
+    nextStateIds.push(stateId);
+
+    return nextStateIds;
+  };
+
+  const onDragStart = start => {
+    setEnabledIds(
+      [
+        start.source.droppableId,
+        getNextStateIds(start.draggableId, start.source.droppableId)
+      ]
+    );
+  };
+
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
+    setEnabledIds([0, []]);
 
     if (!destination) {
       return;
@@ -117,11 +148,23 @@ const Board = () => {
   return (
     <section className="board">
       <header className="board__header">Board header</header>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext
+        onDragEnd={onDragEnd}
+        onDragStart={onDragStart}
+      >
         <div className="board__content row">
           {
             data && data.States && data.States.map(state => {
-              return <Column key={state.Id} column={state} items={state.Items}/>;
+
+              const isDropDisabled = !enabledStateIds[1].includes(state.Id);
+
+              return <Column
+                key={state.Id}
+                column={state}
+                items={state.Items}
+                noHighlight={enabledStateIds[0] === state.Id}
+                isDropDisabled={isDropDisabled}
+              />;
             })
           }
         </div>

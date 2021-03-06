@@ -29,4 +29,21 @@
 
   }
 
+  &--dropping-enabled {
+
+    &.board-column--is-dragging-over {
+
+      &::before {
+        background: rgba(#deebff, 1);
+      }
+
+    }
+
+    &::before {
+      border: 2px dashed $blue;
+      background: rgba(#deebff, .6);
+    }
+
+  }
+
 }
