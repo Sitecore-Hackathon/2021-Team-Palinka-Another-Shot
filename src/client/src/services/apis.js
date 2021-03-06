@@ -1,4 +1,4 @@
-const useLocalSitecore = true;
+const useLocalSitecore = false;
 
 export default function getWorkflowApi() {
   if (window.location.hostname === "localhost") {

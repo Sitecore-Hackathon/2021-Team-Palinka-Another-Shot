@@ -12,7 +12,13 @@ const WorkItem = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <Link to={`${process.env.PUBLIC_URL}/detail/${props.item.ID}/${props.item.Language}`}>{props.item.Name}</Link>
+          <Link className="work-item__title"
+                to={`${process.env.PUBLIC_URL}/detail/${props.item.ID}/${props.item.Language}`}>
+            {props.item.Name}
+          </Link>
+          <p>Language: {props.item.Language}</p>
+          <p>Last updated: {new Date(props.item.LastUpdated).toLocaleString()} by {props.item.LastUpdatedBy}</p>
+          <p>Template name: {props.item.TemplateName}</p>
         </div>
       )}
     </Draggable>

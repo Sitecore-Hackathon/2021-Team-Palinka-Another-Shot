@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchWorkflows, workflowSelector } from "../redux/slices/workflows";
 import { fetchWorkItems, workItemsSelector } from "../redux/slices/workitems";
 import Select from "react-select";
@@ -59,10 +60,13 @@ const Header = (props) => {
   return (
     <header className="header">
       <div className="header__top row middle-xs between-xs">
-        <div className="logo">
+        <Link
+          to={`${process.env.PUBLIC_URL}`}
+          className="logo"
+        >
           <img src={Logo} alt="Advanced Workbox Logo"/>
           <h1>Advanced Workbox</h1>
-        </div>
+        </Link>
       </div>
       {props.showFilter &&
       <div className="header__bottom row middle-xs start-xs">

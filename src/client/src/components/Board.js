@@ -9,12 +9,13 @@ const Board = () => {
   const [data, setData] = useState(null);
   const [enabledStateIds, setEnabledIds] = useState([0, []]);
   const { workItems } = useSelector(workItemsSelector);
+  const { selectedWorkflowId } = useSelector(workItemsSelector);
 
   useEffect(() => {
     if (workItems && workItems.States) {
       setData(workItems);
     }
-  }, [workItems]);
+  }, [workItems, selectedWorkflowId]);
 
   const reOrderItems = (originalItems, reOrdered) => {
     const orderedItems = [];
@@ -53,15 +54,6 @@ const Board = () => {
     return nextStateIds;
   };
 
-  const onDragStart = start => {
-    setEnabledIds(
-      [
-        start.source.droppableId,
-        getNextStateIds(start.draggableId, start.source.droppableId)
-      ]
-    );
-  };
-
   const getActionId = (targetStateId, sourceStateId, itemId) => {
     if (targetStateId === sourceStateId) {
       return;
@@ -82,32 +74,10 @@ const Board = () => {
     return actions.ID;
   };
 
-  const onDragEnd = result => {
-    const { destination, source, draggableId } = result;
-
-    setEnabledIds([0, []]);
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    dispatch(postChangeWorkflow({
-      "ItemId": draggableId,
-      "CommandId": getActionId(destination.droppableId, source.droppableId, draggableId),
-      "Comment": "Test"
-    }));
-
+  const updateBoardStates = (destination, source, draggableId) => {
     const start = data.States.filter(obj => {
       return obj.Id === source.droppableId;
     })[0];
-
     const finish = data.States.filter(obj => {
       return obj.Id === destination.droppableId;
     })[0];
@@ -171,6 +141,42 @@ const Board = () => {
     };
 
     setData(newState);
+  };
+
+  const onDragStart = start => {
+    setEnabledIds(
+      [
+        start.source.droppableId,
+        getNextStateIds(start.draggableId, start.source.droppableId)
+      ]
+    );
+  };
+
+  const onDragEnd = result => {
+    const { destination, source, draggableId } = result;
+
+    setEnabledIds([0, []]);
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    dispatch(postChangeWorkflow({
+      "ItemId": draggableId,
+      "CommandId": getActionId(destination.droppableId, source.droppableId, draggableId),
+      "Comment": "Test"
+    })).then(data => {
+      if (data.IsSuccess === true) {
+        updateBoardStates(destination, source, draggableId);
+      }
+    });
   };
 
   return (

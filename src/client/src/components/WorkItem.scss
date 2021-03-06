@@ -7,6 +7,7 @@
   transition: background .2s;
   box-shadow: 0 0 1px 0 rgba(9, 30, 66, .31), 0 2px 4px -1px rgba(9, 30, 66, .25);
   box-sizing: border-box;
+  border-radius: 2px;
 
   &:hover {
     background: rgba(235, 236, 240, 1);
@@ -15,6 +16,28 @@
 
   &--is-dragging {
     opacity: .5;
+  }
+
+  &__title {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 15px;
+    font-size: 17px;
+    text-decoration: none;
+    color: #333;
+
+    &:hover {
+      text-decoration: underline;
+      color: $blue;
+    }
+
+  }
+
+  p {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #5e6c84;
   }
 
 }

@@ -4,6 +4,8 @@ import { getChangeWorkflowApi, getWorkflowDetails } from "../../services/apis";
 export const initialState = {
   loading: false,
   hasErrors: false,
+  selectedWorkflowId: null,
+  workflowSuccess: true,
   workItems: {},
 };
 
@@ -12,13 +14,16 @@ const workItemsSlice = createSlice({
   initialState,
   reducers: {
     changeWorkflow: state => {
+      state.workflowSuccess = false;
       state.loading = true;
     },
-    changeWorkflowSuccess: state => {
+    changeWorkflowSuccess: (state, { payload }) => {
+      state.workflowSuccess = payload.IsSuccess;
       state.loading = false;
       state.hasErrors = true;
     },
     changeWorkflowFailure: state => {
+      state.workflowSuccess = false;
       state.loading = false;
       state.hasErrors = true;
     },
@@ -27,12 +32,14 @@ const workItemsSlice = createSlice({
     },
     getItemsSuccess: (state, { payload }) => {
       state.workItems = payload;
+      state.selectedWorkflowId = payload.Id;
       state.loading = false;
       state.hasErrors = false;
     },
     getItemsFailure: state => {
       state.loading = false;
       state.hasErrors = true;
+      state.selectedWorkflowId = null;
     },
   },
 });
@@ -86,8 +93,10 @@ export function postChangeWorkflow(postData) {
       });
       const data = await response.json();
       dispatch(changeWorkflowSuccess(data));
+      return data;
     } catch (error) {
       dispatch(changeWorkflowFailure());
+      return false;
     }
   };
 }
