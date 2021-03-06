@@ -12,8 +12,10 @@
 ### Purpose of the module
 
 - The main purpose of this module to have a new and cleaner UI for the workbox
-- The new UI provides more Visual overview about Different items in different workflows
+- The new UI provides a better user experience by utilizing drag and drop features.
 - The new UI provides more information about the items and about their workflow state/history than the previous one. 
+
+- It helps the content authors to identity easily which items belongs to which workflow state and allows a very easy changes.
 
 ## Video link
 ⟹ Demo Video
