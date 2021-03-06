@@ -12,7 +12,12 @@ const WorkItem = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
+          <img src={props && props.item.Icon} width="16" height="16"/>
           <Link to={`${process.env.PUBLIC_URL}/detail/${props.item.ID}/${props.item.Language}`}>{props.item.Name}</Link>
+          <br/>
+          <strong>Updated by:</strong>{props.item.LastUpdatedBy}<br/>
+          <strong>Updated at:</strong>{props.item.LastUpdated}<br/>
+          <strong>Current Version: </strong>{props.item.CurrentVersion}
         </div>
       )}
     </Draggable>
