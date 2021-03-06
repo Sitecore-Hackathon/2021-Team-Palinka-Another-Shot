@@ -8,7 +8,6 @@ const Board = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState(null);
   const [itemToComment, setItemToComment] = useState({});
-  const [commentMessage, setCommentMessage] = useState("");
   const [commentBoxVisible, setCommentBoxVisibility] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [enabledStateIds, setEnabledIds] = useState([0, []]);
@@ -22,10 +21,6 @@ const Board = () => {
       setData(workItems);
     }
   }, [workItems, selectedWorkflowId]);
-
-  useEffect(() => {
-    console.log(itemToComment);
-  }, [itemToComment]);
 
   const reOrderItems = (originalItems, reOrdered) => {
     const orderedItems = [];
@@ -64,7 +59,7 @@ const Board = () => {
     return nextStateIds;
   };
 
-  const getAction = (targetStateId, sourceStateId, itemId) => {
+  const getActionAndLang = (targetStateId, sourceStateId, itemId) => {
     if (targetStateId === sourceStateId) {
       return;
     }
@@ -77,9 +72,16 @@ const Board = () => {
       return item.ID === itemId;
     })[0];
 
-    return activeItem.NextStates.filter(next => {
+    const lang = activeItem.Language;
+    const action = activeItem.NextStates.filter(next => {
       return next.Id === targetStateId;
     })[0].Actions[0];
+
+    return {
+      action,
+      lang,
+    }
+
   };
 
   const updateBoardStates = (destination, source, draggableId) => {
@@ -178,26 +180,28 @@ const Board = () => {
 
     setLoading(true);
 
-    const action = getAction(destination.droppableId, source.droppableId, draggableId);
+    const actionAndLang = getActionAndLang(destination.droppableId, source.droppableId, draggableId);
 
-    if (action.SuppressComment) {
-      callChangeDispatch(draggableId, action.ID, "", destination, source);
+    if (actionAndLang.action.SuppressComment) {
+      callChangeDispatch(draggableId, actionAndLang.action.ID, actionAndLang.lang, "", destination, source);
     } else {
       setItemToComment({
         destination,
         source,
         draggableId,
-        actionId: action.ID,
+        actionId: actionAndLang.action.ID,
+        lang: actionAndLang.lang
       });
       setCommentBoxVisibility(true);
     }
   };
 
-  const callChangeDispatch = (draggableId, actionId, comment, destination, source) => {
+  const callChangeDispatch = (draggableId, actionId, language, comment, destination, source) => {
     dispatch(postChangeWorkflow({
       "ItemId": draggableId,
       "CommandId": actionId,
       "Comment": comment,
+      "Language": "en",
     })).then(data => {
       if (data.IsSuccess === true) {
         updateBoardStates(destination, source, draggableId);
@@ -208,12 +212,12 @@ const Board = () => {
   };
 
   const updateWorkflowWithComment = (comment, item) => {
-    callChangeDispatch(item.draggableId, item.actionId, comment, item.destination, item.source);
+    callChangeDispatch(item.draggableId, item.actionId, item.lang, comment, item.destination, item.source);
+    setItemToComment({});
   };
 
   const handleCommentSave = () => {
     const comment = commentTextAreaRef.current && commentTextAreaRef.current.value;
-    setCommentMessage(comment);
     setCommentBoxVisibility(false);
     updateWorkflowWithComment(comment, itemToComment);
   };
