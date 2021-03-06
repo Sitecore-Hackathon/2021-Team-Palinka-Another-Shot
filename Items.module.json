@@ -17,6 +17,11 @@
                 "path": "/sitecore/content/Home",
                 "scope": "ItemAndDescendants"
             },
+ {
+                 "name":  "Sitecore.AdvancedWorkbox.ShortCut",
+                 "path":  "/sitecore/client/Applications/Launchpad/PageSettings/Buttons/ContentEditing/AdvancedWorkbox",
+                 "database":  "core"
+                                   },
 
 
         ]
