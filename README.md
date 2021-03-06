@@ -30,7 +30,7 @@
 - The module can be used on XM or XP configuration. (Please note, the current solution uses XP)
 - No other program is required in order to spin up the container images
 
-## Installation instructions
+## Installation instructions on Docker
 ⟹ Installation instructions how to spin up the docker image  
 
 **Notes:** You do not have to build Visual Studio solution or the React client applications, everything is done in Docker
@@ -59,7 +59,15 @@
 - Start Advanced Sitecore Workbox on the Launchpad (Find next to the original Workbox Shortcut)
 ![File2](documentation/screenshots/file2.png)
 
+## Installation via Sitecore Package
+Provide detailed instructions on how to install the module, and include screenshots where necessary.
 
+- Use the Sitecore Installation wizard to install the [package](sc.package/Advanced.Sitecore.Workbox-v1.0.zip)
+- Make sure if your search indexes are working correctly
+- Go the LaunchPad and open the Advanced Workbox.
+
+### Configuration
+The module does not requires any extra configuration, configuration files are using the proper Server Roles. (Standalone or Content Management) The package contains a configuration patch, which registers the http routes and IoC container, and sets the "Sitecore.Services.SecurityPolicy" to "ServicesOnPolicy" - it is required for the SPA application.
 
 ## Usage instructions
 ⟹ Provide documentation about your module, how do the users use your module, where are things located, what do the icons mean, are there any secret shortcuts etc.
