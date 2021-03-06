@@ -45,6 +45,12 @@
         public string Language { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance has layout.
+        /// </summary>
+        /// <value><c>true</c> if this instance has layout; otherwise, <c>false</c>.</value>
+        public bool HasLayout { get; set; }
+
+        /// <summary>
         /// Gets or sets the next states.
         /// </summary>
         /// <value>The next states.</value>

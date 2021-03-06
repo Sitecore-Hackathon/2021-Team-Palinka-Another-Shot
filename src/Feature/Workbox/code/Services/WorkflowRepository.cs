@@ -75,12 +75,13 @@
 
                     using (var context = index.CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
                     {
-                        var resultItems = context.GetQueryable<WorkflowSearchItem>().Where(p => p.WorkflowID == wfItem.ID.ToString() && p.WorkflowState == wfState.ID.ToString() && p.IsLatestVersion);
+                        var wfStateId = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(wfState.ID);
+                        var resultItems = context.GetQueryable<WorkflowSearchItem>().Where(p => p.WorkflowState == wfStateId && p.IsLatestVersion);
                         var searchResultItems = resultItems.GetResults();
 
                         foreach (var resultItem in searchResultItems.Hits)
                         {
-                            var item = Factory.GetDatabase("master").GetItem(new ID(resultItem.Document.ID));
+                            var item = Factory.GetDatabase("master").GetItem(resultItem.Document.ItemId, Language.Parse(resultItem.Document.Language));
 
                             if (item != null)
                             {
@@ -88,10 +89,11 @@
                                 {
                                     ID = item.ID.ToString(),
                                     Name = item.Name,
-                                    Language = item.Language?.Name ?? string.Empty,
+                                    Language = resultItem.Document.Language ?? string.Empty,
                                     LastUpdated = item.Statistics?.Updated ?? DateTime.MinValue,
                                     LastUpdatedBy = item.Statistics?.UpdatedBy ?? string.Empty,
                                     TemplateName = item.TemplateName,
+                                    HasLayout = item.Visualization?.Layout != null,
                                     NextStates = GetNextStates(item, wfState)
                                 };
 
