@@ -1,5 +1,6 @@
 {
     "name": "sitecore_hackathon_2021",
+    "homepage": "/sitecore/shell/client/Applications/advancedworkbox/",
     "version": "1.0.0",
     "private": false,
     "dependencies": {
