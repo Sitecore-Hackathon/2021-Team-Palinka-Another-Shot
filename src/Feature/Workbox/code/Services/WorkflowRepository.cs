@@ -10,6 +10,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     /// <summary>
     /// Class WorkflowRepository.
@@ -19,10 +20,20 @@
     public class WorkflowRepository : IWorkflowRepository
     {
         /// <summary>
-        /// Gets the detailed workflow.
+        /// The logger
         /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>DetailedWorkflow.</returns>
+        private readonly IWorkflowLogger _logger;
+
+        public WorkflowRepository(IWorkflowLogger logger)
+        {
+            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        /// <summary>
+        /// Gets the detailed workflow view with items
+        /// </summary>
+        /// <param name="id">The workflow identifier.</param>
+        /// <returns>DetailedWorkflow view with items.</returns>
         public DetailedWorkflow GetDetailedWorkflow(string id)
         {
             var response = new DetailedWorkflow();
@@ -73,9 +84,9 @@
         }
 
         /// <summary>
-        /// Gets the workflows.
+        /// Gets the all workflows.
         /// </summary>
-        /// <returns>List&lt;Workflow&gt;.</returns>
+        /// <returns>List all available workflows in the system</returns>
         public List<Workflow> GetWorkflows()
         {
             var result = new List<Workflow>();
@@ -125,51 +136,103 @@
         private List<NextWorkflowState> GetNextStates(Item item, Item wfStateItem)
         {
             var result = new List<NextWorkflowState>();
-            foreach (var wfCommand in wfStateItem.Children.Where(t => t.TemplateID == Templates.WorkflowCommand.TemplateId))
+            var wfCommands = wfStateItem.Children.Where(t => t.TemplateID == Templates.WorkflowCommand.TemplateId);
+            foreach (var wfCommand in wfCommands)
             {
-                var nextState = result.FirstOrDefault(testc => testc.Id == wfCommand[Templates.WorkflowCommand.Fields.NextState]);
-
-                if (nextState == null)
+                var appearance = wfCommand[Templates.WorkflowCommand.Fields.AppearanceEvaluatorType];
+                if (ValidateAppearance(item, wfCommand, appearance))
                 {
-                    nextState = new NextWorkflowState
+                    var nextState = result.FirstOrDefault(testc => testc.Id == wfCommand[Templates.WorkflowCommand.Fields.NextState]);
+
+                    if (nextState == null)
                     {
-                        Id = wfCommand[Templates.WorkflowCommand.Fields.NextState],
-                        Name = Sitecore.Context.Database.GetItem(new ID(wfCommand[Templates.WorkflowCommand.Fields.NextState])).Name
-                    };
+                        nextState = new NextWorkflowState
+                        {
+                            Id = wfCommand[Templates.WorkflowCommand.Fields.NextState],
+                            Name = Sitecore.Context.Database.GetItem(new ID(wfCommand[Templates.WorkflowCommand.Fields.NextState])).Name
+                        };
+                        result.Add(nextState);
+                    }
 
-                    result.Add(nextState);
+                    nextState.Actions.Add(new WorkboxAction
+                    {
+                        ID = wfCommand.ID.ToString(),
+                        Name = wfCommand.Name,
+                        SuppressComment = wfCommand[Templates.WorkflowCommand.Fields.SuppressComment] == "1"
+                    });
                 }
-
-                nextState.Actions.Add(new WorkboxAction
-                {
-                    ID = wfCommand.ID.ToString(),
-                    Name = wfCommand.Name,
-                    SuppressComment = wfCommand[Templates.WorkflowCommand.Fields.SuppressComment] == "1"
-                });
             }
             return result;
         }
 
         /// <summary>
-        /// Gets the actions.
+        /// Validates the appearance of the given Workflow command
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <param name="commands">The commands.</param>
-        /// <returns>List&lt;WorkboxAction&gt;.</returns>
-        private List<WorkboxAction> GetActions(Item item, List<Item> commands)
+        /// <param name="workflowCommand">The workflow command.</param>
+        /// <param name="validatorType">Type of the validator.</param>
+        /// <returns><c>true</c> if the command should be visible, <c>false</c> otherwise.</returns>
+        private bool ValidateAppearance(Item item, Item workflowCommand, string validatorType)
         {
-            var result = new List<WorkboxAction>();
-            // TODO:  //Appearance Evaluator Type EVALUATE
-            foreach (var wfCommand in commands)
+            if (string.IsNullOrEmpty(validatorType))
             {
-                result.Add(new WorkboxAction
-                {
-                    ID = wfCommand.ID.ToString(),
-                    Name = wfCommand.Name,
-                    SuppressComment = wfCommand[Templates.WorkflowCommand.Fields.SuppressComment] == "1"
-                });
+                return true;
             }
-            return result;
+
+            string assemblyName = string.Empty;
+            string typeName = string.Empty;
+
+            try
+            {
+                assemblyName = validatorType.Split(',')[1].Trim();
+                typeName = validatorType.Split(',')[0].Trim();
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(string.Format("{0} could not be parsed, use the following format: <NameSpace>.<Class>,<AssemblyName>", validatorType), ex);
+
+                return false;
+            }
+
+            Assembly assembly = null;
+            try
+            {
+                assembly = Assembly.Load(assemblyName);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(string.Format("{0} assembly could not be loaded, please check the configuration!", assemblyName), ex);
+                return false;
+            }
+
+            Type type = assembly.GetType(typeName);
+
+            if (type == null)
+            {
+                this._logger.LogError(string.Format("{0} type could not be loaded, please check the configuration!", typeName), null);
+                return false;
+            }
+
+            var methodName = "EvaluateState";
+
+            MethodInfo methodInfo = type.GetMethod(methodName);
+
+            if (methodInfo == null)
+            {
+                this._logger.LogError(string.Format("{0} method could not be loaded, please make sure you implemented the 'DoHealthcheck' method!", methodName), null);
+
+                return false;
+            }
+
+            Sitecore.Workflows.WorkflowCommandState result = Sitecore.Workflows.WorkflowCommandState.Hidden;
+            ParameterInfo[] parameters = methodInfo.GetParameters();
+            object classInstance = Activator.CreateInstance(type, null);
+
+            object[] parametersArray = new object[] { item, workflowCommand };
+
+            result = (Sitecore.Workflows.WorkflowCommandState)methodInfo.Invoke(classInstance, parametersArray);
+
+            return result == Sitecore.Workflows.WorkflowCommandState.Visible;
         }
     }
 }

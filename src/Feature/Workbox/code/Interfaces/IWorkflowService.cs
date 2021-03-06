@@ -1,14 +1,22 @@
 ﻿namespace Feature.Workbox.Interfaces
 {
+    using Feature.Workbox.Models.Request;
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
     using System.Collections.Generic;
 
     /// <summary>
-    /// IWorkflowRepository interface. 
+    /// IWorkflowService interface
     /// </summary>
-    public interface IWorkflowRepository
+    public interface IWorkflowService
     {
+        /// <summary>
+        /// Changes the workflow state for the given item
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>ChangeWorkflowResponse.</returns>
+        ChangeWorkflowResponse ChangeWorkflow(ChangeWorkflowRequest request);
+
         /// <summary>
         /// Gets the all workflows.
         /// </summary>

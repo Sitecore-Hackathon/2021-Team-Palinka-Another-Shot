@@ -55,6 +55,8 @@ namespace Feature.Workbox
 
                 public const string SuppressCommentId = "{82A7C02F-9A55-4BFE-B494-D1713D4BE9FF}";
                 public const string SuppressComment = "Suppress Comment";
+
+                public const string AppearanceEvaluatorType = "Appearance Evaluator Type";
             }
         }
     }

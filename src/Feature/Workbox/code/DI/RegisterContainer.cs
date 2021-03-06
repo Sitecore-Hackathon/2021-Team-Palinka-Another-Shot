@@ -19,6 +19,9 @@ namespace Feature.Workbox.DI
         public void Configure(IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IWorkflowRepository, WorkflowRepository>();
+            serviceCollection.AddTransient<ISitecoreFactory, SitecoreFactory>();
+            serviceCollection.AddTransient<IWorkflowService, WorkflowService>();
+            serviceCollection.AddTransient<IWorkflowLogger, WorkflowLogger>();
 
             serviceCollection.AddTransient<WorkboxApiController>();
         }
