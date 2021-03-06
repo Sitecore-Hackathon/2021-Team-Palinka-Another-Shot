@@ -17,9 +17,8 @@
 - It helps the content authors to identity easily which items belong to which workflow state and allows a very easy changes.
 
 ## Video link
-⟹ Demo Video
 
-⟹ [Replace this Video link](https://www.youtube.com/watch?v=YPDpw12GXhk&ab_channel=Mih%C3%A1ly%C3%81rvai)
+⟹ [Demo Video](https://www.youtube.com/watch?v=YPDpw12GXhk&ab_channel=Mih%C3%A1ly%C3%81rvai)
 
 ## Pre-requisites and Dependencies
 
