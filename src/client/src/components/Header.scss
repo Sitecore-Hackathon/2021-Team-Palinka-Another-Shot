@@ -1,0 +1,87 @@
+.header {
+  position: relative;
+  padding: 10px;
+  color: $white;
+  background: $blue;
+
+  &__top {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+
+  &__bottom {
+    padding: 15px 0 10px;
+    border-top: 1px solid #deebff;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      object-fit: cover;
+    }
+
+  }
+
+  h1 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  h6 {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .workflow-selector {
+    width: 200px;
+    color: $gray;
+  }
+
+  button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    outline: none;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-appearance: none;
+  }
+
+  .quick-filters {
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px;
+    margin: 0;
+    list-style: none;
+    font-size: 14px;
+
+    li {
+      padding: 0 10px 0 0;
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+
+        button {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+
+      }
+
+    }
+
+  }
+
+}
