@@ -10,6 +10,7 @@
 
     &::before {
       position: fixed;
+      max-height: 100vh;
       content: "";
       top: 0;
       bottom: 0;
@@ -20,9 +21,9 @@
     }
 
     &::after {
+      position: fixed;
       content: '';
       box-sizing: border-box;
-      position: absolute;
       top: 50%;
       left: 50%;
       width: 20px;

@@ -197,7 +197,7 @@ const Board = () => {
       setItemToComment({
         destination,
         source,
-        realDraggableId,
+        draggableId: realDraggableId,
         actionId: actionAndLang.action.ID,
         lang: actionAndLang.lang
       });
