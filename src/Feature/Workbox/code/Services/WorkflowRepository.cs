@@ -3,7 +3,11 @@
     using Feature.Workbox.Interfaces;
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
+    using Feature.Workbox.Models.Search;
     using Sitecore.Configuration;
+    using Sitecore.ContentSearch;
+    using Sitecore.ContentSearch.Linq;
+    using Sitecore.ContentSearch.Security;
     using Sitecore.Data;
     using Sitecore.Data.Items;
     using Sitecore.SecurityModel;
@@ -43,38 +47,48 @@
             response.Name = wfItem.Name;
 
             List<Item> items = new List<Item>();
-            // TODO: REWRITE TO CONTENT SEARCH
-            //"__Workflow", "__Workflow state"
-            using (new SecurityDisabler())
-            {
-                using (new DatabaseSwitcher(Factory.GetDatabase(Constants.Databases.Master)))
-                {
-                    items = Sitecore.Context.Database.GetItem(new ID("{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}")).Axes.GetDescendants().ToList();
-                }
-            }
 
-            foreach (var wfState in wfItem.Children.Where(t => t.TemplateID == Templates.WorkflowState.TemplateId))
+            var index = ContentSearchManager.GetIndex("sitecore_master_index");
+            if (index != null)
             {
-                var state = new DetailedWorkflowState
+                foreach (var wfState in wfItem.Children.Where(t => t.TemplateID == Templates.WorkflowState.TemplateId))
                 {
-                    Id = wfState.ID.ToString(),
-                    IsFinal = wfState[Templates.WorkflowState.Fields.Final] == "1",
-                    Name = wfState.Name
-                };
-
-                state.Items = items.Where(t => t["__Workflow"].Equals(wfItem.ID.ToString()) && t["__Workflow State"].Equals(wfState.ID.ToString()))
-                    .Select(item => new WorkflowItem
+                    var state = new DetailedWorkflowState
                     {
-                        ID = item.ID.ToString(),
-                        Name = item.Name,
-                        Language = item.Language?.Name ?? string.Empty,
-                        LastUpdated = item.Statistics?.Updated ?? DateTime.MinValue,
-                        LastUpdatedBy = item.Statistics?.UpdatedBy ?? string.Empty,
-                        TemplateName = item.TemplateName,
-                        NextStates = GetNextStates(item, wfState)
-                    }).ToList();
+                        Id = wfState.ID.ToString(),
+                        IsFinal = wfState[Templates.WorkflowState.Fields.Final] == "1",
+                        Name = wfState.Name
+                    };
 
-                response.States.Add(state);
+                    using (var context = index.CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
+                    {
+                        var resultItems = context.GetQueryable<WorkflowSearchItem>().Where(p => p.WorkflowID == wfItem.ID.ToString() && p.WorkflowState == wfState.ID.ToString() && p.IsLatestVersion);
+                        var searchResultItems = resultItems.GetResults();
+
+                        foreach (var resultItem in searchResultItems.Hits)
+                        {
+                            var item = Factory.GetDatabase("master").GetItem(new ID(resultItem.Document.ID));
+
+                            if (item != null)
+                            {
+                                var workflowItem = new WorkflowItem()
+                                {
+                                    ID = item.ID.ToString(),
+                                    Name = item.Name,
+                                    Language = item.Language?.Name ?? string.Empty,
+                                    LastUpdated = item.Statistics?.Updated ?? DateTime.MinValue,
+                                    LastUpdatedBy = item.Statistics?.UpdatedBy ?? string.Empty,
+                                    TemplateName = item.TemplateName,
+                                    NextStates = GetNextStates(item, wfState)
+                                };
+
+                                state.Items.Add(workflowItem);
+                            }
+                        }
+
+                        response.States.Add(state);
+                    }
+                }
             }
 
             response.QuickFilters.Add("TemplateName", response.States?.SelectMany(t => t.Items).Select(t => t.TemplateName).Distinct());
