@@ -1,5 +1,15 @@
 .board-column {
   position: relative;
+  margin-bottom: 50px;
+
+  > div {
+    height: 100%;
+  }
+
+  h3 {
+    position: absolute;
+    transform: translateY(calc(-100% - 20px));
+  }
 
   &::before {
     position: absolute;
