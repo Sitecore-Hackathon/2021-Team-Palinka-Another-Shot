@@ -187,25 +187,29 @@ const Board = () => {
     const realSourceDroppableId = getRealId(source.droppableId);
     const realDestinationDroppableId = getRealId(destination.droppableId);
 
-    setLoading(true);
-
     const actionAndLang = getActionAndLang(realDestinationDroppableId, realSourceDroppableId, realDraggableId);
 
-    if (actionAndLang.action.SuppressComment) {
-      callChangeDispatch(realDraggableId, actionAndLang.action.ID, actionAndLang.lang, "", destination, source);
+    if (actionAndLang) {
+      if (actionAndLang.action.SuppressComment) {
+        callChangeDispatch(realDraggableId, actionAndLang.action.ID, actionAndLang.lang, "", destination, source);
+      } else {
+        setLoading(true);
+        setItemToComment({
+          destination,
+          source,
+          draggableId: realDraggableId,
+          actionId: actionAndLang.action.ID,
+          lang: actionAndLang.lang
+        });
+        setCommentBoxVisibility(true);
+      }
     } else {
-      setItemToComment({
-        destination,
-        source,
-        draggableId: realDraggableId,
-        actionId: actionAndLang.action.ID,
-        lang: actionAndLang.lang
-      });
-      setCommentBoxVisibility(true);
+      updateBoardStates(destination, source, realDraggableId);
     }
   };
 
   const callChangeDispatch = (draggableId, actionId, language, comment, destination, source) => {
+    setLoading(true);
     dispatch(postChangeWorkflow({
       "ItemId": draggableId,
       "CommandId": actionId,
