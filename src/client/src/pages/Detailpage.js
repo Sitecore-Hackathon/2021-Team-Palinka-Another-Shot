@@ -21,9 +21,17 @@ const Detailpage = () => {
           Details of the <a
           href={`/sitecore/shell/Applications/Content%20Editor.aspx?fo=${itemDetails.Id}&la=${itemDetails.Language}&sc_lang=en`}
           target="_blank" rel="noreferrer">{itemDetails.Name}</a> item <span>({itemDetails.Id})</span></h2>
-        <h3>Item name: {itemDetails && itemDetails.Name} <img src={itemDetails && itemDetails.Icon} alt=""/></h3>
+        <h3>Item name: {itemDetails && itemDetails.Name}</h3>
+        <h4>Icon: <img src={itemDetails && itemDetails.Icon} alt=""/></h4>
         <h4>Path: {itemDetails && itemDetails.FullPath}</h4>
-        <h4>Language: {itemDetails.Language}</h4>
+        <h4>Language: {itemDetails.Language || "-"}</h4>
+        <h4>Version number: {itemDetails.VersionNumber || "-"}</h4>
+        {itemDetails.MultiVariateTestedRenderings && itemDetails.MultiVariateTestedRenderings.length > 0 &&
+        <h5>This item has <b>Multivariate</b> renderings!</h5>
+        }
+        {itemDetails.PersonalizedRenderings && itemDetails.PersonalizedRenderings.length > 0 &&
+        <h5>This item has <b>Personalization</b> renderings!</h5>
+        }
 
         <div className="details-page__history">
           <h2>History of the item</h2>
