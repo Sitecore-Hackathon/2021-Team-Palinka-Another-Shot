@@ -62,8 +62,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Sitecore.Kernel" Version="10.1.0"/>
-    <PackageReference Include="Sitecore.Services.Infrastructure" Version="10.1.0"/>
+    <PackageReference Include="Sitecore.Kernel" Version="10.1.0" />
+    <PackageReference Include="Sitecore.Services.Infrastructure" Version="10.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\WorkboxApiController.cs" />
@@ -76,10 +76,12 @@
     <Compile Include="Models\Response\ChangeWorkflowResponse.cs" />
     <Compile Include="Models\Response\DetailedWorkflow.cs" />
     <Compile Include="Models\Response\DetailedWorkflowState.cs" />
+    <Compile Include="Models\Response\ItemDetailsResponse.cs" />
     <Compile Include="Models\Response\NextWorkflowState.cs" />
     <Compile Include="Models\Response\Workbox.cs" />
     <Compile Include="Models\Response\WorkboxAction.cs" />
     <Compile Include="Models\Response\Workflow.cs" />
+    <Compile Include="Models\Response\WorkflowHistoryResponse.cs" />
     <Compile Include="Models\Response\WorkflowItem.cs" />
     <Compile Include="Models\Response\WorkflowState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

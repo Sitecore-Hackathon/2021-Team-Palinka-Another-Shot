@@ -5,8 +5,10 @@
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
     using Sitecore.Data;
+    using Sitecore.Data.Items;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Class WorkflowService.
@@ -98,12 +100,75 @@
         }
 
         /// <summary>
+        /// Gets the item details.
+        /// </summary>
+        /// <param name="id">The item identifier.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>The detailed item view.</returns>
+        public ItemDetailsResponse GetItemDetails(string id, string language)
+        {
+            var response = new ItemDetailsResponse();
+
+            var item = this._workflowRepository.GetItem(id, language);
+
+            if (item == null)
+            {
+                response.IsSuccess = false;
+                response.Message = $"Item with ID: {id} cannot be found";
+
+                return response;
+            }
+
+            response.Name = item.Name;
+            response.Id = item.ID.ToString();
+            response.TemplateId = item.TemplateID.ToString();
+            response.TemplateName = item.TemplateName;
+            response.Language = item.Language.Name;
+            response.Updated = item.Statistics.Updated;
+            response.UpdatedBy = item.Statistics.UpdatedBy;
+            response.Created = item.Statistics.Created;
+            response.CreatedBy = item.Statistics.CreatedBy;
+            response.FullPath = item.Paths.FullPath;
+
+            var history = this._workflowRepository.GetHistory(item);
+
+            response.History = history.Select(this.LoadHistoryRecord).ToList();
+            response.IsSuccess = true;
+
+            return response;
+        }
+
+        /// <summary>
         /// Gets the all workflows.
         /// </summary>
         /// <returns>List all available workflows in the system</returns>
         public List<Workflow> GetWorkflows()
         {
             return this._workflowRepository.GetWorkflows();
+        }
+
+        private WorkflowHistoryResponse LoadHistoryRecord(Sitecore.Workflows.WorkflowEvent item)
+        {
+            var historyRecord = new WorkflowHistoryResponse
+            {
+                Date = item.Date,
+                CommentFields = item.CommentFields,
+                NewState = item.NewState,
+                OldState = item.OldState,
+                User = item.User
+            };
+
+            if (!string.IsNullOrEmpty(historyRecord.OldState))
+            {
+                historyRecord.OldStateName = this._masterDatabase.GetItem(new ID(historyRecord.OldState))?.Name ?? string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(historyRecord.NewState))
+            {
+                historyRecord.NewStateName = this._masterDatabase.GetItem(new ID(historyRecord.NewState))?.Name ?? string.Empty;
+            }
+
+            return historyRecord;
         }
     }
 }

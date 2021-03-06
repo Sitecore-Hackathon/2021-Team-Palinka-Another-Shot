@@ -2,6 +2,7 @@
 {
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
+    using Sitecore.Data.Items;
     using System.Collections.Generic;
 
     /// <summary>
@@ -21,5 +22,20 @@
         /// <param name="id">The workflow identifier.</param>
         /// <returns>DetailedWorkflow view with items.</returns>
         DetailedWorkflow GetDetailedWorkflow(string id);
+
+        /// <summary>
+        /// Gets the item by id.
+        /// </summary>
+        /// <param name="id">The item identifier.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>The item.</returns>
+        Item GetItem(string id, string language);
+
+        /// <summary>
+        /// Gets the workflow history for an Item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>List of workflow history events</returns>
+        Sitecore.Workflows.WorkflowEvent[] GetHistory(Item item);
     }
 }

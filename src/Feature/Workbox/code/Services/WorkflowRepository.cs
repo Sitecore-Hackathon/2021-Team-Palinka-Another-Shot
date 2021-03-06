@@ -6,6 +6,7 @@
     using Sitecore.Configuration;
     using Sitecore.Data;
     using Sitecore.Data.Items;
+    using Sitecore.Globalization;
     using Sitecore.SecurityModel;
     using System;
     using System.Collections.Generic;
@@ -24,9 +25,21 @@
         /// </summary>
         private readonly IWorkflowLogger _logger;
 
-        public WorkflowRepository(IWorkflowLogger logger)
+        /// <summary>
+        /// The sitecore factory
+        /// </summary>
+        private readonly ISitecoreFactory _sitecoreFactory;
+
+        /// <summary>
+        /// The master database
+        /// </summary>
+        private readonly Database _masterDatabase;
+
+        public WorkflowRepository(IWorkflowLogger logger, ISitecoreFactory sitecoreFactory)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this._sitecoreFactory = sitecoreFactory ?? throw new ArgumentNullException(nameof(sitecoreFactory));
+            this._masterDatabase = this._sitecoreFactory.GetDatabase(Constants.Databases.Master);
         }
 
         /// <summary>
@@ -81,6 +94,22 @@
             response.QuickFilters.Add("LastUpdatedBy", response.States?.SelectMany(t => t.Items).Select(t => t.LastUpdatedBy).Distinct());
 
             return response;
+        }
+
+        /// <summary>
+        /// Gets the item by id.
+        /// </summary>
+        /// <param name="id">The item identifier.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>The item.</returns>
+        public Item GetItem(string id, string language)
+        {
+            return this._masterDatabase.GetItem(new ID(id), Language.Parse(language));
+        }
+
+        public Sitecore.Workflows.WorkflowEvent[] GetHistory(Item item)
+        {
+            return this._masterDatabase.WorkflowProvider.GetWorkflow(item).GetHistory(item);
         }
 
         /// <summary>

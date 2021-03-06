@@ -51,6 +51,18 @@
         }
 
         /// <summary>
+        /// Items the detail.
+        /// </summary>
+        /// <param name="itemId">The item identifier.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>The itemdetails view.</returns>
+        [HttpGet]
+        public ItemDetailsResponse ItemDetail(string itemId, string language)
+        {
+            return this._workflowService.GetItemDetails(itemId, language);
+        }
+
+        /// <summary>
         /// Changes the workflow state on the given item
         /// </summary>
         /// <param name="request">The request dto.</param>

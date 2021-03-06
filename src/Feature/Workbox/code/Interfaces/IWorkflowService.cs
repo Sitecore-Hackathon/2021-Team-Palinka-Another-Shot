@@ -29,5 +29,13 @@
         /// <param name="id">The workflow identifier.</param>
         /// <returns>DetailedWorkflow view with items.</returns>
         DetailedWorkflow GetDetailedWorkflow(string id);
+
+        /// <summary>
+        /// Gets the item details.
+        /// </summary>
+        /// <param name="id">The item identifier.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>The detailed item view.</returns>
+        ItemDetailsResponse GetItemDetails(string id, string language);
     }
 }
