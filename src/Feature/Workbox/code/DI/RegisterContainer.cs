@@ -1,5 +1,7 @@
 namespace Feature.Workbox.DI
-{    
+{
+    using Feature.Workbox.Interfaces;
+    using Feature.Workbox.Services;
     using Microsoft.Extensions.DependencyInjection;
     using Sitecore.DependencyInjection;
 
@@ -15,7 +17,7 @@ namespace Feature.Workbox.DI
         /// <param name="serviceCollection">The service collection.</param>
         public void Configure(IServiceCollection serviceCollection)
         {
-            
+            serviceCollection.AddTransient<IWorkflowRepository, WorkflowRepository>();
         }
     }
 }

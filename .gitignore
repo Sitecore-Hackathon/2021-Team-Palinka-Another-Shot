@@ -39,3 +39,20 @@ _ReSharper*/
 .vs/
 #Nuget packages folder
 packages/
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Publishing.3.0.0/Sitecore.DevEx.Extensibility.Publishing.3.0.0.nupkg
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Publishing.3.0.0/Sitecore.DevEx.Extensibility.Publishing.nuspec
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Publishing.3.0.0/icon.png
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Publishing.3.0.0/plugin/Microsoft.Extensions.Http.dll
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Publishing.3.0.0/plugin/Sitecore.DevEx.Extensibility.Publishing.dll
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Publishing.3.0.0/plugin/Sitecore.DevEx.Serialization.Client.dll
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Publishing.3.0.0/plugin/Sitecore.DevEx.Serialization.dll
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Publishing.3.0.0/sitecore.myget.licence.md
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/Sitecore.DevEx.Extensibility.Serialization.3.0.0.nupkg
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/Sitecore.DevEx.Extensibility.Serialization.nuspec
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/icon.png
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/plugin/Microsoft.Extensions.Http.dll
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/plugin/Sitecore.DevEx.Extensibility.Serialization.dll
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/plugin/Sitecore.DevEx.Serialization.Client.dll
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/plugin/Sitecore.DevEx.Serialization.dll
+/.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/sitecore.myget.licence.md
+/.vscode
