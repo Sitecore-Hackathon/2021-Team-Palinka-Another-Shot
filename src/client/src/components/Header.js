@@ -7,6 +7,7 @@ import Select from "react-select";
 import Logo from "../assets/logo.png";
 
 const Header = (props) => {
+  const quickFiltersEnabled = false;
   const dispatch = useDispatch();
   const { workflowItems, loading } = useSelector(workflowSelector);
   const { workItems } = useSelector(workItemsSelector);
@@ -75,8 +76,8 @@ const Header = (props) => {
         </Link>
       </div>
       {props.showFilter &&
-      <div className="header__bottom row middle-xs start-xs">
-        {renderQuickFilters()}
+      <div className={`header__bottom row middle-xs ${quickFiltersEnabled ? "start-xs": "end-xs"}`}>
+        {quickFiltersEnabled && renderQuickFilters()}
         {workflowItems.length > 0 &&
         <Select
           className="workflow-selector"
