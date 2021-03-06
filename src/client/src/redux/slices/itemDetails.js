@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import getItemDetails from "../../services/apis";
+import { getItemDetails } from "../../services/apis";
 
 export const initialState = {
   loading: false,
@@ -34,7 +34,7 @@ export default itemDetailsSlice.reducer;
 
 export function fetchItemDetails(id, language) {
   const url = getItemDetails().replace("{itemId}", id).replace("{language}", language);
-  
+
   return async dispatch => {
     dispatch(getItems());
 

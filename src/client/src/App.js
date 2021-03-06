@@ -8,10 +8,10 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/sitecore/shell/client/Applications/advancedworkbox">
+        <Route exact path={`${process.env.PUBLIC_URL}`}>
           <Homepage/>
         </Route>
-        <Route path="/sitecore/shell/client/Applications/advancedworkbox/detail/:id/:lang">
+        <Route path={`${process.env.PUBLIC_URL}/detail/:id/:lang`}>
           <Detailpage/>
         </Route>
         <Route path="*">
