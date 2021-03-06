@@ -1,0 +1,20 @@
+# folders
+.git
+.gitignore
+.vs
+.vscode
+build
+docker
+packages
+**/bin/
+**/obj/
+**/out/
+
+# files
+*Dockerfile
+docker-compose*
+**/*.md
+*.ps1
+
+**/node_modules
+src/client/node_modules

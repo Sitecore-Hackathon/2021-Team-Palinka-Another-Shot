@@ -6,7 +6,23 @@
                 "name": "sampleworkbox",
                 "path": "/sitecore/system/Workflows/Team Palinka Workflow",
                 "scope": "ItemAndDescendants"
-            }
+            },
+{
+                "name": "sample-templates",
+                "path": "/sitecore/templates/Sample",
+                "scope": "ItemAndDescendants"
+            },
+{
+                "name": "sample-content",
+                "path": "/sitecore/content/Home",
+                "scope": "ItemAndDescendants"
+            },
+ {
+                 "name":  "Sitecore.AdvancedWorkbox.ShortCut",
+                 "path":  "/sitecore/client/Applications/Launchpad/PageSettings/Buttons/ContentEditing/AdvancedWorkbox",
+                 "database":  "core"
+                                   },
+
 
         ]
     }

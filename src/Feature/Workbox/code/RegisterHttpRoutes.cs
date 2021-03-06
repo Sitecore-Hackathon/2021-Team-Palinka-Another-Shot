@@ -18,7 +18,6 @@
         /// <param name="routes">The routes.</param>
         protected virtual void RegisterRoute(RouteCollection routes)
         {
-
             RouteTable.Routes.MapHttpRoute("WorkboxApi",
                 "sitecore/api/ssc/workbox/{action}",
                 new { controller = "WorkboxApi" });
