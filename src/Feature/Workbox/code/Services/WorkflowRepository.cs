@@ -10,6 +10,7 @@
     using Sitecore.ContentSearch.Security;
     using Sitecore.Data;
     using Sitecore.Data.Items;
+    using Sitecore.Data.Managers;
     using Sitecore.Globalization;
     using Sitecore.SecurityModel;
     using System;
@@ -54,7 +55,7 @@
         public DetailedWorkflow GetDetailedWorkflow(string id)
         {
             var response = new DetailedWorkflow();
-            var wfItem = Sitecore.Context.Database.GetItem(new ID(id));
+            var wfItem = this._masterDatabase.GetItem(new ID(id));
 
             response.Id = wfItem.ID.ToString();
             response.Name = wfItem.Name;
@@ -94,6 +95,8 @@
                                     LastUpdatedBy = item.Statistics?.UpdatedBy ?? string.Empty,
                                     TemplateName = item.TemplateName,
                                     HasLayout = item.Visualization?.Layout != null,
+                                    CurrentVersion = item.Version.Number,
+                                    Icon = GetIconUrl(item),
                                     NextStates = GetNextStates(item, wfState)
                                 };
 
@@ -123,6 +126,22 @@
             return this._masterDatabase.GetItem(new ID(id), Language.Parse(language));
         }
 
+        /// <summary>
+        /// Gets the item by id.
+        /// </summary>
+        /// <param name="id">The item identifier.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>The item.</returns>
+        public Item GetItem(string id)
+        {
+            return this._masterDatabase.GetItem(new ID(id), Language.Parse(Constants.Languages.En));
+        }
+
+        /// <summary>
+        /// Gets the workflow history for an Item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>List of workflow history events</returns>
         public Sitecore.Workflows.WorkflowEvent[] GetHistory(Item item)
         {
             return this._masterDatabase.WorkflowProvider.GetWorkflow(item).GetHistory(item);
@@ -194,7 +213,7 @@
                         nextState = new NextWorkflowState
                         {
                             Id = wfCommand[Templates.WorkflowCommand.Fields.NextState],
-                            Name = Sitecore.Context.Database.GetItem(new ID(wfCommand[Templates.WorkflowCommand.Fields.NextState])).Name
+                            Name = _masterDatabase.GetItem(new ID(wfCommand[Templates.WorkflowCommand.Fields.NextState])).Name
                         };
                         result.Add(nextState);
                     }
@@ -278,6 +297,34 @@
             result = (Sitecore.Workflows.WorkflowCommandState)methodInfo.Invoke(classInstance, parametersArray);
 
             return result == Sitecore.Workflows.WorkflowCommandState.Visible;
+        }
+
+        private string GetIconUrl(Item item)
+        {
+            if (item == null)
+            {
+                return "";
+            }
+            string iconImageRaw = ThemeManager.GetIconImage(item, 32, 32, "", "");
+            if (!string.IsNullOrWhiteSpace(iconImageRaw) && iconImageRaw.Contains("src="))
+            {
+                int i0 = iconImageRaw.IndexOf("src=");
+                int i1 = iconImageRaw.IndexOf('"', i0 + 1);
+                if (i1 < 0)
+                {
+                    return null;
+                }
+
+                int i2 = iconImageRaw.IndexOf('"', i1 + 1);
+                if (i2 < 0)
+                {
+                    return null;
+                }
+
+                return iconImageRaw.Substring(i1, i2 - i1).Trim(' ', '"', '\\');
+            }
+
+            return null;
         }
     }
 }

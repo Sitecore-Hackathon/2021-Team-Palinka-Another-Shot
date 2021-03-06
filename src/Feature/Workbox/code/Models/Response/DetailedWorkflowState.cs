@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Class DetailedWorkflowState.
+    /// Class DetailedWorkflow State.
     /// </summary>
     public class DetailedWorkflowState
     {

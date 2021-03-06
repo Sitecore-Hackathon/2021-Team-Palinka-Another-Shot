@@ -1,7 +1,7 @@
 ﻿namespace Feature.Workbox.Models.Response
 {
     /// <summary>
-    /// Class ChangeWorkflowResponse.
+    /// Class ChangeWorkflow Response.
     /// </summary>
     public class ChangeWorkflowResponse
     {

@@ -5,7 +5,6 @@
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
     using Sitecore.Data;
-    using Sitecore.Data.Items;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -66,7 +65,7 @@
                 IsSuccess = false
             };
 
-            var item = this._masterDatabase.GetItem(new ID(request.ItemId));
+            var item = this._workflowRepository.GetItem(request.ItemId);
 
             Sitecore.Workflows.IWorkflow wf = this._masterDatabase.WorkflowProvider.GetWorkflow(item);
 
@@ -123,6 +122,9 @@
             response.Id = item.ID.ToString();
             response.TemplateId = item.TemplateID.ToString();
             response.TemplateName = item.TemplateName;
+            response.HasLayout = item.Visualization?.Layout != null;
+            response.VersionNumber = item.Version.Number;
+            // TODO: ITEM ICON
             response.Language = item.Language.Name;
             response.Updated = item.Statistics.Updated;
             response.UpdatedBy = item.Statistics.UpdatedBy;
@@ -132,7 +134,7 @@
 
             var defaultDevice = this._sitecoreFactory.GetDefaultDevice();
 
-            foreach(var rendering in item.Visualization.GetRenderings(defaultDevice, false))
+            foreach (var rendering in item.Visualization.GetRenderings(defaultDevice, false))
             {
                 if (!string.IsNullOrEmpty(rendering.Settings.PersonalizationTest))
                 {

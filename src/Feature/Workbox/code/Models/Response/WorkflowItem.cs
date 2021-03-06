@@ -51,6 +51,18 @@
         public bool HasLayout { get; set; }
 
         /// <summary>
+        /// Gets or sets the icon.
+        /// </summary>
+        /// <value>The icon.</value>
+        public string Icon { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current version.
+        /// </summary>
+        /// <value>The current version.</value>
+        public int CurrentVersion { get; set; }
+
+        /// <summary>
         /// Gets or sets the next states.
         /// </summary>
         /// <value>The next states.</value>

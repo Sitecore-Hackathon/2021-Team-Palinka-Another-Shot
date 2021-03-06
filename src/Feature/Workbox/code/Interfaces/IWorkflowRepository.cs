@@ -6,7 +6,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// IWorkflowRepository interface. 
+    /// IWorkflowRepository interface.
     /// </summary>
     public interface IWorkflowRepository
     {
@@ -20,7 +20,7 @@
         /// Gets the detailed workflow view with items
         /// </summary>
         /// <param name="id">The workflow identifier.</param>
-        /// <returns>DetailedWorkflow view with items.</returns>
+        /// <returns>Detailed Workflow view with items.</returns>
         DetailedWorkflow GetDetailedWorkflow(string id);
 
         /// <summary>
@@ -30,6 +30,13 @@
         /// <param name="language">The language.</param>
         /// <returns>The item.</returns>
         Item GetItem(string id, string language);
+
+        /// <summary>
+        /// Gets the item by id.
+        /// </summary>
+        /// <param name="id">The item identifier.</param>
+        /// <returns>The item.</returns>
+        Item GetItem(string id);
 
         /// <summary>
         /// Gets the workflow history for an Item.

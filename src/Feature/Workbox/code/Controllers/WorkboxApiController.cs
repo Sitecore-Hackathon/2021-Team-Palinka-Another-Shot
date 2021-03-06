@@ -8,9 +8,10 @@
     using System.Collections.Generic;
     using System.Web.Http;
     using System.Web.Http.Cors;
-    
-    /// <summary> Redesignedworkbox api controller data
-    /// Implements the <see cref="Sitecore.Services.Infrastructure.Web.Http.ServicesApiController" /></summary>
+
+    /// <summary> Redesignedworkbox api controller
+    ///  Implements the <see cref="Sitecore.Services.Infrastructure.Web.Http.ServicesApiController" />
+    ///  </summary>
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     //[Authorize]
     public class WorkboxApiController : ServicesApiController

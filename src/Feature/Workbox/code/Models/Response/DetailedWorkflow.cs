@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Class DetailedWorkflow.
+    /// Class Detailed Workflow.
     /// </summary>
     public class DetailedWorkflow
     {

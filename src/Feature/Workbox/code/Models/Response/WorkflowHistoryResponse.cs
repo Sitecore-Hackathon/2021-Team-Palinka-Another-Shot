@@ -1,11 +1,7 @@
 ﻿namespace Feature.Workbox.Models.Response
 {
     using Sitecore.Collections;
-    using Sitecore.Workflows;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
 
     /// <summary>
     /// Class WorkflowHistoryResponse dto.

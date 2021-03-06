@@ -45,10 +45,28 @@
         public string TemplateName { get; set; }
 
         /// <summary>
+        /// Gets or sets the version number.
+        /// </summary>
+        /// <value>The version number.</value>
+        public int VersionNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the template identifier.
         /// </summary>
         /// <value>The template identifier.</value>
         public string TemplateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance has layout.
+        /// </summary>
+        /// <value><c>true</c> if this instance has layout; otherwise, <c>false</c>.</value>
+        public bool HasLayout { get; set; }
+
+        /// <summary>
+        /// Gets or sets the icon.
+        /// </summary>
+        /// <value>The icon.</value>
+        public string Icon { get; set; }
 
         /// <summary>
         /// Gets or sets the created.
