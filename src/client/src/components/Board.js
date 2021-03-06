@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { workItemsSelector } from "../redux/slices/workitems";
+import { useDispatch, useSelector } from "react-redux";
+import { postChangeWorkflow, workItemsSelector } from "../redux/slices/workitems";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 
 const Board = () => {
+  const dispatch = useDispatch();
   const [data, setData] = useState(null);
   const [enabledStateIds, setEnabledIds] = useState([0, []]);
   const { workItems } = useSelector(workItemsSelector);
@@ -61,8 +62,29 @@ const Board = () => {
     );
   };
 
+  const getActionId = (targetStateId, sourceStateId, itemId) => {
+    if (targetStateId === sourceStateId) {
+      return;
+    }
+
+    const sourceState = data.States.filter(state => {
+      return state.Id === sourceStateId;
+    })[0];
+
+    const activeItem = sourceState.Items.filter(item => {
+      return item.ID === itemId;
+    })[0];
+
+    const actions = activeItem.NextStates.filter(next => {
+      return next.Id === targetStateId;
+    })[0].Actions[0];
+
+    return actions.ID;
+  };
+
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
+
     setEnabledIds([0, []]);
 
     if (!destination) {
@@ -75,6 +97,12 @@ const Board = () => {
     ) {
       return;
     }
+
+    dispatch(postChangeWorkflow({
+      "ItemId": draggableId,
+      "CommandId": getActionId(destination.droppableId, source.droppableId, draggableId),
+      "Comment": "Test"
+    }));
 
     const start = data.States.filter(obj => {
       return obj.Id === source.droppableId;
