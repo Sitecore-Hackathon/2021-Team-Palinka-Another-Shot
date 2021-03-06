@@ -5,19 +5,19 @@ import { Provider } from "react-redux";
 import logger from "redux-logger";
 
 import App from "./App";
-import rootReducer from "./slices";
+import rootReducer from "./redux/slices";
 
 import "./index.scss";
 
 const store = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
-    devTools: process.env.NODE_ENV !== "production",
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 render(
-    <Provider store={store}>
-        <App/>
-    </Provider>,
-    document.getElementById("root")
+  <Provider store={store}>
+    <App/>
+  </Provider>,
+  document.getElementById("root")
 );
