@@ -7,7 +7,7 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/sitecore/shell/client/Applications/advancedworkbox">
           <Homepage/>
         </Route>
         <Route path="*">

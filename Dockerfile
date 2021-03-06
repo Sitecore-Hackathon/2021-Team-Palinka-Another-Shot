@@ -11,7 +11,7 @@ ARG BUILD_IMAGE
 # This technique is described here:
 # https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-3.1#the-dockerfile-1
 FROM ${BUILD_IMAGE} AS nuget-prep
-COPY *.sln nuget.config Directory.Build.targets Packages.props /nuget/
+COPY *.sln nuget.config Directory.build.props Directory.build.targets /nuget/
 COPY src/ /temp/
 RUN Invoke-Expression 'robocopy C:/temp C:/nuget/src /s /ndl /njh /njs *.csproj *.scproj packages.config'
 
@@ -21,6 +21,12 @@ ARG BUILD_CONFIGURATION
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 WORKDIR /build
 
+RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v14.16.0/node-v14.16.0-win-x64.zip"; `
+    Expand-Archive nodejs.zip -DestinationPath C:\; `
+    Rename-Item "C:\\node-v14.16.0-win-x64" c:\nodejs
+RUN SETX /M PATH $($Env:PATH + ';C:\nodejs')
+RUN npm config set registry https://registry.npmjs.org/
+RUN npm install -g @sitecore-jss/sitecore-jss-cli
 # Copy prepped NuGet artifacts, and restore as distinct layer to take advantage of caching.
 COPY --from=nuget-prep ./nuget ./
 
@@ -33,11 +39,16 @@ COPY src/ ./src/
 # Ensure deploy folder exist to prevent errors on initial build
 RUN mkdir ./docker/deploy/platform
 
-# Build the solution to generate build artifacts
-## assumes that the msbuild property <SitecoreRoleType>platform|rendering</SitecoreRoleType> is used to target deploy folders 
-RUN Get-ChildItem *.sln | %{  msbuild $_.FullName /p:Configuration=$env:BUILD_CONFIGURATION /m /p:DeployOnBuild=true /p:IsLocalDockerDeploy=true }
+# Build the Sitecore main platform artifacts
+RUN msbuild .\src\feature\workbox\code\Feature.Workbox.csproj /p:Configuration=$env:BUILD_CONFIGURATION /t:Restore,Build /p:DeployOnBuild=true /p:PublishUrl=C:\build\docker\deploy\platform /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem
+
+WORKDIR c:\build\src\client
+RUN npm install
+RUN npm build
+RUN npm run toaspx
 
 # Save the artifacts for copying into other images (see 'cm' and 'rendering' Dockerfiles).
 FROM mcr.microsoft.com/windows/nanoserver:1809
 WORKDIR /artifacts
 COPY --from=builder /build/docker/deploy/ ./
+COPY --from=builder /build/src/client/build ./platform/sitecore/shell/client/Applications/advancedworkbox/
