@@ -17,3 +17,4 @@ docker-compose*
 *.ps1
 
 **/node_modules
+src/client/node_modules

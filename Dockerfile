@@ -26,7 +26,6 @@ RUN Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/d
     Rename-Item "C:\\node-v14.16.0-win-x64" c:\nodejs
 RUN SETX /M PATH $($Env:PATH + ';C:\nodejs')
 RUN npm config set registry https://registry.npmjs.org/
-RUN npm install -g @sitecore-jss/sitecore-jss-cli
 # Copy prepped NuGet artifacts, and restore as distinct layer to take advantage of caching.
 COPY --from=nuget-prep ./nuget ./
 
