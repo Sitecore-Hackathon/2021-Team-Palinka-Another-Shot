@@ -1,7 +1,7 @@
 .board {
   position: relative;
   display: flex;
-  min-height: calc(100vh - 149px);
+  min-height: calc(100vh - 168px);
   flex-direction: column;
   padding: 0 0 10px;
   box-sizing: border-box;
@@ -9,14 +9,14 @@
   &--is-loading {
 
     &::before {
-      position: absolute;
+      position: fixed;
       content: "";
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba($white, .8);
+      background: rgba(#000, .4);
     }
 
     &::after {
@@ -30,8 +30,8 @@
       margin-top: -10px;
       margin-left: -10px;
       border-radius: 50%;
-      border: 2px solid #ccc;
-      border-top-color: #000;
+      border: 2px solid #fff;
+      border-top-color: $blue;
       z-index: 100000;
       animation: spinner .6s linear infinite;
     }
@@ -45,6 +45,65 @@
   &__content {
     flex: 1;
     padding-top: 40px;
+    margin-bottom: -40px;
+  }
+
+  .item-comment {
+    position: fixed;
+    width: 50%;
+    height: 280px;
+    max-width: 400px;
+    top: 50%;
+    left: 50%;
+    padding: 20px;
+    z-index: 999999;
+    background: $white;
+    border-radius: 2px;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 1px 0 rgba(9, 30, 66, .31), 0 2px 4px -1px rgba(9, 30, 66, .25);
+
+    h4 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      display: block;
+      margin-bottom: 10px;
+      width: 100%;
+      resize: none;
+      outline: 0;
+      font-size: 12px;
+      padding: 5px;
+      font-family: Roboto, sans-serif;
+      appearance: none;
+      box-shadow: none;
+      border: 1px solid $blue;
+      background: #fefefe;
+      box-sizing: border-box;
+    }
+
+    button {
+      display: block;
+      font-size: 12px;
+      padding: 10px 20px;
+      font-family: Roboto, sans-serif;
+      appearance: none;
+      outline: 0;
+      border: 0;
+      box-shadow: none;
+      background: $blue;
+      color: #fff;
+      cursor: pointer;
+    }
+
   }
 
 }

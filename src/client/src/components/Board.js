@@ -7,16 +7,25 @@ import Column from "./Column";
 const Board = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState(null);
+  const [itemToComment, setItemToComment] = useState({});
+  const [commentMessage, setCommentMessage] = useState("");
+  const [commentBoxVisible, setCommentBoxVisibility] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [enabledStateIds, setEnabledIds] = useState([0, []]);
   const { workItems } = useSelector(workItemsSelector);
   const { selectedWorkflowId } = useSelector(workItemsSelector);
+
+  const commentTextAreaRef = React.createRef();
 
   useEffect(() => {
     if (workItems && workItems.States) {
       setData(workItems);
     }
   }, [workItems, selectedWorkflowId]);
+
+  useEffect(() => {
+    console.log(itemToComment);
+  }, [itemToComment]);
 
   const reOrderItems = (originalItems, reOrdered) => {
     const orderedItems = [];
@@ -55,7 +64,7 @@ const Board = () => {
     return nextStateIds;
   };
 
-  const getActionId = (targetStateId, sourceStateId, itemId) => {
+  const getAction = (targetStateId, sourceStateId, itemId) => {
     if (targetStateId === sourceStateId) {
       return;
     }
@@ -68,11 +77,9 @@ const Board = () => {
       return item.ID === itemId;
     })[0];
 
-    const actions = activeItem.NextStates.filter(next => {
+    return activeItem.NextStates.filter(next => {
       return next.Id === targetStateId;
     })[0].Actions[0];
-
-    return actions.ID;
   };
 
   const updateBoardStates = (destination, source, draggableId) => {
@@ -171,10 +178,26 @@ const Board = () => {
 
     setLoading(true);
 
+    const action = getAction(destination.droppableId, source.droppableId, draggableId);
+
+    if (action.SuppressComment) {
+      callChangeDispatch(draggableId, action.ID, "", destination, source);
+    } else {
+      setItemToComment({
+        destination,
+        source,
+        draggableId,
+        actionId: action.ID,
+      });
+      setCommentBoxVisibility(true);
+    }
+  };
+
+  const callChangeDispatch = (draggableId, actionId, comment, destination, source) => {
     dispatch(postChangeWorkflow({
       "ItemId": draggableId,
-      "CommandId": getActionId(destination.droppableId, source.droppableId, draggableId),
-      "Comment": "Test"
+      "CommandId": actionId,
+      "Comment": comment,
     })).then(data => {
       if (data.IsSuccess === true) {
         updateBoardStates(destination, source, draggableId);
@@ -184,11 +207,36 @@ const Board = () => {
     });
   };
 
+  const updateWorkflowWithComment = (comment, item) => {
+    callChangeDispatch(item.draggableId, item.actionId, comment, item.destination, item.source);
+  };
+
+  const handleCommentSave = () => {
+    const comment = commentTextAreaRef.current && commentTextAreaRef.current.value;
+    setCommentMessage(comment);
+    setCommentBoxVisibility(false);
+    updateWorkflowWithComment(comment, itemToComment);
+  };
+
   return (
     <section
       className={`board ${isLoading ? "board--is-loading" : ""}`}
     >
-      <header className="board__header">Board header</header>
+      {commentBoxVisible &&
+      <div className="item-comment">
+        <h4>Comment is required</h4>
+        <p>Please add your feedback / comment for this state change!</p>
+        <div className="item-comment__form">
+          <textarea
+            rows={10}
+            placeholder="Enter your comment here"
+            ref={commentTextAreaRef}
+          >
+          </textarea>
+          <button onClick={handleCommentSave}>Save</button>
+        </div>
+      </div>
+      }
       <DragDropContext
         onDragEnd={onDragEnd}
         onDragStart={onDragStart}
