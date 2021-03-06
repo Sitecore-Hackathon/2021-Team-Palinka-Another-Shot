@@ -39,11 +39,35 @@
 
   }
 
+  &__open-in {
+    display: block;
+    font-weight: 300;
+    padding: 2px 0;
+    font-size: 12px;
+    text-decoration: none;
+    color: $blue;
+
+    img {
+      margin-right: 5px;
+    }
+
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+  }
+
   p {
     display: block;
     font-size: 12px;
     margin-bottom: 4px;
     color: #5e6c84;
+
+    & + a {
+      margin-top: 15px;
+    }
+
   }
 
 }

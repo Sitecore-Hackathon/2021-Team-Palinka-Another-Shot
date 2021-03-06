@@ -26,6 +26,18 @@ const WorkItem = (props) => {
             props.item.CurrentVersion &&
             <p>Current Version: {props.item.CurrentVersion}</p>
           }
+          <Link
+            target="_blank"
+            className="work-item__open-in"
+            to={`/sitecore/shell/Applications/Content%20Editor.aspx?fo=${props.item.ID}&la=${props.item.Language}&sc_lang=en`}
+          >Open in Content Editor
+          </Link>
+          <Link
+            target="_blank"
+            className="work-item__open-in"
+            to={`/sitecore/shell/sitecore/client/Applications/Launchpad`}
+          >Open Launchpad
+          </Link>
         </div>
       )}
     </Draggable>

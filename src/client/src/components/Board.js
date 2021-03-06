@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postChangeWorkflow, workItemsSelector } from "../redux/slices/workitems";
+import { fetchWorkItems, postChangeWorkflow, workItemsSelector } from "../redux/slices/workitems";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 
 const Board = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(false);
   const [enabledStateIds, setEnabledIds] = useState([0, []]);
   const { workItems } = useSelector(workItemsSelector);
   const { selectedWorkflowId } = useSelector(workItemsSelector);
@@ -168,6 +169,8 @@ const Board = () => {
       return;
     }
 
+    setLoading(true);
+
     dispatch(postChangeWorkflow({
       "ItemId": draggableId,
       "CommandId": getActionId(destination.droppableId, source.droppableId, draggableId),
@@ -176,11 +179,15 @@ const Board = () => {
       if (data.IsSuccess === true) {
         updateBoardStates(destination, source, draggableId);
       }
+      dispatch(fetchWorkItems(selectedWorkflowId));
+      setLoading(false);
     });
   };
 
   return (
-    <section className="board">
+    <section
+      className={`board ${isLoading ? "board--is-loading" : ""}`}
+    >
       <header className="board__header">Board header</header>
       <DragDropContext
         onDragEnd={onDragEnd}
