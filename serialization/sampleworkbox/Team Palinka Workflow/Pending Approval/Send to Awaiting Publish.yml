@@ -1,0 +1,27 @@
+﻿---
+ID: "92182937-bfbb-45a2-97ff-8aa3ff249336"
+Parent: "c38a9696-5d43-4a2f-9b55-35fef15b393d"
+Template: "cb01f9fc-c187-46b3-ab0b-97a8468d8303"
+Path: /sitecore/system/Workflows/Team Palinka Workflow/Pending Approval/Send to Awaiting Publish
+SharedFields:
+- ID: "dcbebc58-6124-4100-a248-fc717d6c78d5"
+  Hint: Next state
+  Value: "{EF6CA084-E6D1-4643-ABF5-9C811F3B80B3}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20210306T072707Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "4e6a6273-a7aa-4366-97af-bca46b5505a0"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20210306T072714Z
