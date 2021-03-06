@@ -6,6 +6,38 @@
   padding: 0 0 10px;
   box-sizing: border-box;
 
+  &--is-loading {
+
+    &::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba($white, .8);
+    }
+
+    &::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin-top: -10px;
+      margin-left: -10px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      border-top-color: #000;
+      z-index: 100000;
+      animation: spinner .6s linear infinite;
+    }
+
+  }
+
   &__header {
     padding: 10px;
   }
@@ -15,4 +47,10 @@
     padding-top: 40px;
   }
 
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
 }
