@@ -44,5 +44,19 @@
         /// <param name="item">The item.</param>
         /// <returns>List of workflow history events</returns>
         Sitecore.Workflows.WorkflowEvent[] GetHistory(Item item);
+
+        /// <summary>
+        /// Gets the workflow.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>The workflow for item</returns>
+        Sitecore.Workflows.IWorkflow GetWorkflow(Item item);
+
+        /// <summary>
+        /// Gets the icon URL.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>The icon url.</returns>
+        string GetIconUrl(Item item);
     }
 }

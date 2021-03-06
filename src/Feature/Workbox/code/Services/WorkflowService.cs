@@ -4,7 +4,6 @@
     using Feature.Workbox.Models.Request;
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
-    using Sitecore.Data;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,11 +16,6 @@
     public class WorkflowService : IWorkflowService
     {
         /// <summary>
-        /// The sitecore factory
-        /// </summary>
-        private readonly ISitecoreFactory _sitecoreFactory;
-
-        /// <summary>
         /// The logger
         /// </summary>
         private readonly IWorkflowLogger _logger;
@@ -32,25 +26,21 @@
         private readonly IWorkflowRepository _workflowRepository;
 
         /// <summary>
-        /// The master database
+        /// The sitecore factory
         /// </summary>
-        private readonly Database _masterDatabase;
+        private readonly ISitecoreFactory _sitecoreFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowService" /> class.
         /// </summary>
-        /// <param name="sitecoreFactory">The sitecore factory.</param>
         /// <param name="logger">The logger.</param>
         /// <param name="workflowRepository">The workflow repository.</param>
-        /// <exception cref="ArgumentNullException">sitecoreFactory</exception>
-        /// <exception cref="ArgumentNullException">logger</exception>
-        public WorkflowService(ISitecoreFactory sitecoreFactory, IWorkflowLogger logger, IWorkflowRepository workflowRepository)
+        /// <param name="sitecoreFactory">The sitecore factory.</param>
+        public WorkflowService(IWorkflowLogger logger, IWorkflowRepository workflowRepository, ISitecoreFactory sitecoreFactory)
         {
-            this._sitecoreFactory = sitecoreFactory ?? throw new ArgumentNullException(nameof(sitecoreFactory));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this._workflowRepository = workflowRepository ?? throw new ArgumentNullException(nameof(workflowRepository));
-
-            this._masterDatabase = this._sitecoreFactory.GetDatabase(Constants.Databases.Master);
+            this._sitecoreFactory = sitecoreFactory ?? throw new ArgumentNullException(nameof(sitecoreFactory));
         }
 
         /// <summary>
@@ -67,7 +57,7 @@
 
             var item = this._workflowRepository.GetItem(request.ItemId);
 
-            Sitecore.Workflows.IWorkflow wf = this._masterDatabase.WorkflowProvider.GetWorkflow(item);
+            Sitecore.Workflows.IWorkflow wf = this._workflowRepository.GetWorkflow(item);
 
             if (wf != null)
             {
@@ -124,7 +114,7 @@
             response.TemplateName = item.TemplateName;
             response.HasLayout = item.Visualization?.Layout != null;
             response.VersionNumber = item.Version.Number;
-            // TODO: ITEM ICON
+            response.Icon = this._workflowRepository.GetIconUrl(item);
             response.Language = item.Language.Name;
             response.Updated = item.Statistics.Updated;
             response.UpdatedBy = item.Statistics.UpdatedBy;
@@ -183,12 +173,12 @@
 
             if (!string.IsNullOrEmpty(historyRecord.OldState))
             {
-                historyRecord.OldStateName = this._masterDatabase.GetItem(new ID(historyRecord.OldState))?.Name ?? string.Empty;
+                historyRecord.OldStateName = this._workflowRepository.GetItem(historyRecord.OldState)?.Name ?? string.Empty;
             }
 
             if (!string.IsNullOrEmpty(historyRecord.NewState))
             {
-                historyRecord.NewStateName = this._masterDatabase.GetItem(new ID(historyRecord.NewState))?.Name ?? string.Empty;
+                historyRecord.NewStateName = this._workflowRepository.GetItem(historyRecord.NewState)?.Name ?? string.Empty;
             }
 
             return historyRecord;
