@@ -67,6 +67,12 @@ const Header = (props) => {
           <img src={Logo} alt="Advanced Workbox Logo"/>
           <h1>Advanced Workbox</h1>
         </Link>
+        <Link
+          className="launchpad"
+          target="_blank"
+          to={`/sitecore/shell/sitecore/client/Applications/Launchpad`}
+        >Open Launchpad
+        </Link>
       </div>
       {props.showFilter &&
       <div className="header__bottom row middle-xs start-xs">

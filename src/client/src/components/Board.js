@@ -8,6 +8,7 @@ const Board = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState(null);
   const [itemToComment, setItemToComment] = useState({});
+  const [commentErrorMessage, setCommentErrorMessage] = useState("");
   const [commentBoxVisible, setCommentBoxVisibility] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [enabledStateIds, setEnabledIds] = useState([0, []]);
@@ -80,7 +81,7 @@ const Board = () => {
     return {
       action,
       lang,
-    }
+    };
 
   };
 
@@ -153,17 +154,25 @@ const Board = () => {
     setData(newState);
   };
 
+  const getRealId = (id) => {
+    return id.split("-lang-")[0];
+  };
+
   const onDragStart = start => {
     setEnabledIds(
       [
         start.source.droppableId,
-        getNextStateIds(start.draggableId, start.source.droppableId)
+        getNextStateIds(getRealId(start.draggableId), start.source.droppableId)
       ]
     );
   };
 
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
+
+    const realDraggableId = getRealId(draggableId);
+    const realSourceDroppableId = getRealId(source.droppableId);
+    const realDestinationDroppableId = getRealId(destination.droppableId);
 
     setEnabledIds([0, []]);
 
@@ -180,15 +189,15 @@ const Board = () => {
 
     setLoading(true);
 
-    const actionAndLang = getActionAndLang(destination.droppableId, source.droppableId, draggableId);
+    const actionAndLang = getActionAndLang(realDestinationDroppableId, realSourceDroppableId, realDraggableId);
 
     if (actionAndLang.action.SuppressComment) {
-      callChangeDispatch(draggableId, actionAndLang.action.ID, actionAndLang.lang, "", destination, source);
+      callChangeDispatch(realDraggableId, actionAndLang.action.ID, actionAndLang.lang, "", destination, source);
     } else {
       setItemToComment({
         destination,
         source,
-        draggableId,
+        realDraggableId,
         actionId: actionAndLang.action.ID,
         lang: actionAndLang.lang
       });
@@ -218,8 +227,13 @@ const Board = () => {
 
   const handleCommentSave = () => {
     const comment = commentTextAreaRef.current && commentTextAreaRef.current.value;
-    setCommentBoxVisibility(false);
-    updateWorkflowWithComment(comment, itemToComment);
+    if (comment.trim() !== "") {
+      setCommentErrorMessage("");
+      setCommentBoxVisibility(false);
+      updateWorkflowWithComment(comment, itemToComment);
+    } else {
+      setCommentErrorMessage("Please enter a comment!");
+    }
   };
 
   return (
@@ -235,9 +249,24 @@ const Board = () => {
             rows={10}
             placeholder="Enter your comment here"
             ref={commentTextAreaRef}
+            onKeyPress={(event) => {
+              if (event.key.toLowerCase() === "enter") {
+                handleCommentSave();
+              }
+            }}
           >
           </textarea>
-          <button onClick={handleCommentSave}>Save</button>
+          <p className="item-comment__error">{commentErrorMessage}</p>
+          <div className="item-comment__buttons">
+            <button className="cancel" onClick={() => {
+              setCommentErrorMessage("");
+              setCommentBoxVisibility(false);
+              setItemToComment({});
+              setLoading(false);
+            }}>Cancel
+            </button>
+            <button onClick={handleCommentSave}>Save</button>
+          </div>
         </div>
       </div>
       }
