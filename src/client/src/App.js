@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, useLocation } from "react-router-dom";
 import Homepage from "./pages/Homepage";
+import "./App.scss";
 
 const App = () => {
   return (

@@ -1,0 +1,24 @@
+@import "styles/variables/main.scss";
+@import "styles/mixins/main.scss";
+@import "styles/grid";
+@import "styles/visibility";
+
+$blue: #004099;
+$white: #fff;
+$gray: #666;
+
+@import "components/Layout";
+@import "components/Header";
+@import "components/Footer";
+@import "components/Board";
+@import "pages/Homepage";
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
