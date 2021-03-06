@@ -4,6 +4,8 @@
     using Feature.Workbox.Models.Request;
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
+    using Sitecore.ContentSearch;
+    using Sitecore.Data.Items;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -67,6 +69,7 @@
 
                     response.IsSuccess = result.Succeeded;
                     response.Message = result.Message;
+                    this.ForceIndexUpdate(item);
                 }
                 catch (Exception ex)
                 {
@@ -160,6 +163,23 @@
             return this._workflowRepository.GetWorkflows();
         }
 
+        /// <summary>
+        /// Forces the index update for the newly updated item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        private void ForceIndexUpdate(Item item)
+        {
+            using (var index = ContentSearchManager.GetIndex(Constants.IndexNames.SitecoreMasterIndex))
+            {
+                index.Refresh(new SitecoreIndexableItem(item));
+            }
+        }
+
+        /// <summary>
+        /// Loads the history record.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>WorkflowHistoryResponse.</returns>
         private WorkflowHistoryResponse LoadHistoryRecord(Sitecore.Workflows.WorkflowEvent item)
         {
             var historyRecord = new WorkflowHistoryResponse

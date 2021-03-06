@@ -6,6 +6,17 @@
     public struct Constants
     {
         /// <summary>
+        /// Struct IndexNames
+        /// </summary>
+        public struct IndexNames
+        {
+            /// <summary>
+            /// The sitecore master index
+            /// </summary>
+            public const string SitecoreMasterIndex = "sitecore_master_index";
+        }
+
+        /// <summary>
         /// Struct Databases
         /// </summary>
         public struct Databases
