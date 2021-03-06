@@ -11,7 +11,7 @@ const App = () => {
         <Route exact path="/sitecore/shell/client/Applications/advancedworkbox">
           <Homepage/>
         </Route>
-        <Route path="/sitecore/shell/client/Applications/advancedworkbox/detail/:id">
+        <Route path="/sitecore/shell/client/Applications/advancedworkbox/detail/:id/:lang">
           <Detailpage/>
         </Route>
         <Route path="*">
