@@ -25,6 +25,12 @@ const Board = () => {
     return orderedItems;
   };
 
+  const removeItemById = (originalItems, id) => {
+    return originalItems.filter(item => {
+      return item.ID !== id;
+    });
+  };
+
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
 
@@ -52,10 +58,10 @@ const Board = () => {
       newItemIds.splice(source.index, 1);
       newItemIds.splice(destination.index, 0, draggableId);
 
-      const newItems = reOrderItems(start.Items, newItemIds);
+      const newStartItems = reOrderItems(start.Items, newItemIds);
       const newColumn = {
         ...start,
-        Items: newItems,
+        Items: newStartItems,
       };
 
       const idx = data.States.findIndex(item => item.Id === start.Id);
@@ -73,28 +79,38 @@ const Board = () => {
     }
 
     // Moving from one list to another
-    const startTaskIds = Array.from(start.taskIds);
-    startTaskIds.splice(source.index, 1);
-    const newStart = {
+    const startItemIds = start.Items.map(item => item.ID);
+    const idToRemove = startItemIds.splice(source.index, 1)[0];
+    const filteredStart = removeItemById(start.Items, idToRemove);
+    const removedItem = start.Items.filter(item => {
+      return item.ID === idToRemove;
+    });
+
+    const newStartColumn = {
       ...start,
-      taskIds: startTaskIds,
+      Items: filteredStart,
     };
 
-    const finishTaskIds = Array.from(finish.taskIds);
-    finishTaskIds.splice(destination.index, 0, draggableId);
-    const newFinish = {
+    const finishedItems = Array.from(finish.Items);
+    finishedItems.splice(destination.index, 0, removedItem[0]);
+
+    const newFinishedColumn = {
       ...finish,
-      taskIds: finishTaskIds,
+      Items: finishedItems,
     };
+
+    const idxStart = data.States.findIndex(item => item.Id === start.Id);
+    const idxFinish = data.States.findIndex(item => item.Id === finish.Id);
+    const updatedStates = [...data.States.slice(0, idxStart), newStartColumn, ...data.States.slice(idxStart + 1)];
+    const updatedStates2 = [...updatedStates.slice(0, idxFinish), newFinishedColumn, ...updatedStates.slice(idxFinish + 1)];
 
     const newState = {
       ...data,
-      columns: {
-        ...data.columns,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish,
-      },
+      States: [
+        ...updatedStates2
+      ],
     };
+
     setData(newState);
   };
 
