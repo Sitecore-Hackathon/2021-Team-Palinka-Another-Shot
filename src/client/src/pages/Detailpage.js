@@ -17,15 +17,15 @@ const Detailpage = () => {
   return (
     <Layout>
       <div className="details-page">
-        <h2>{itemDetails && itemDetails.Name}  <img src={itemDetails && itemDetails.Icon}/></h2>
+        <h2>{itemDetails && itemDetails.Name} <img src={itemDetails && itemDetails.Icon} alt=""/></h2>
         <h3>{itemDetails && itemDetails.FullPath}</h3>
-        
+
         <table>
           <tbody>
-            <th>
-              <td>Language</td>
-              <td>{itemDetails && itemDetails.Language}</td>
-            </th>
+          <th>
+            <td>Language</td>
+            <td>{itemDetails && itemDetails.Language}</td>
+          </th>
           </tbody>
         </table>
 

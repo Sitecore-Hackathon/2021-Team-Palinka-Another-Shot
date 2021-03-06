@@ -14,17 +14,18 @@ const WorkItem = (props) => {
         >
           <Link className="work-item__title"
                 to={`${process.env.PUBLIC_URL}/detail/${props.item.ID}/${props.item.Language}`}>
+            {
+              props.item.Icon && <img src={props && props.item.Icon} width="16" height="16" alt=""/>
+            }
             {props.item.Name}
           </Link>
           <p>Language: {props.item.Language}</p>
-          <p>Last updated: {new Date(props.item.LastUpdated).toLocaleString()} by {props.item.LastUpdatedBy}</p>
+          <p>Last updated: <b>{new Date(props.item.LastUpdated).toLocaleString()}</b> by {props.item.LastUpdatedBy}</p>
           <p>Template name: {props.item.TemplateName}</p>
-          <img src={props && props.item.Icon} width="16" height="16"/>
-          <Link to={`${process.env.PUBLIC_URL}/detail/${props.item.ID}/${props.item.Language}`}>{props.item.Name}</Link>
-          <br/>
-          <strong>Updated by:</strong>{props.item.LastUpdatedBy}<br/>
-          <strong>Updated at:</strong>{props.item.LastUpdated}<br/>
-          <strong>Current Version: </strong>{props.item.CurrentVersion}
+          {
+            props.item.CurrentVersion &&
+            <p>Current Version: {props.item.CurrentVersion}</p>
+          }
         </div>
       )}
     </Draggable>
