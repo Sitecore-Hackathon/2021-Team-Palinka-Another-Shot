@@ -1,6 +1,5 @@
 .board-column {
   position: relative;
-  margin-bottom: 50px;
 
   > div {
     height: 100%;
@@ -8,6 +7,7 @@
 
   h3 {
     position: absolute;
+    padding: 0 0 0 10px;
     transform: translateY(calc(-100% - 20px));
   }
 
