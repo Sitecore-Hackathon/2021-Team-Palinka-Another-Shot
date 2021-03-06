@@ -1,31 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
-import Board from "../components/Board";
-import { useParams, withRouter } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchItemDetails, itemDetailsSelector } from "../redux/slices/itemDetails";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Detailpage = () => {
   const dispatch = useDispatch();
   let { id, lang } = useParams();
 
-  const [data, setData] = useState(null);
-  
+  const { itemDetails } = useSelector(itemDetailsSelector);
 
   useEffect(() => {
-    dispatch(fetchItemDetails("asd","asd"));
-  }, [dispatch]);
+    dispatch(fetchItemDetails(id, lang));
+  }, [dispatch, id, lang]);
 
-
-  // useEffect(() => {
-  //   dispatch(fetchItemDetails(id,'en'));
-  // }, [dispatch, itemDetails]);
   return (
     <Layout>
-      <h2>hello</h2>
-      <h3>{id}</h3>
-      <h4>{lang}</h4>
+      <div className="details-page">
+        <h2>{itemDetails && itemDetails.FullPath}</h2>
+      </div>
     </Layout>
   );
 };

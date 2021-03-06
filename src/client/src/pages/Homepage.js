@@ -4,7 +4,7 @@ import Board from "../components/Board";
 
 const Homepage = () => {
   return (
-    <Layout>
+    <Layout showFilter={true}>
       <Board />
     </Layout>
   );

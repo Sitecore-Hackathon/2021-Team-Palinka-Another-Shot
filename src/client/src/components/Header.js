@@ -5,7 +5,7 @@ import { fetchWorkItems, workItemsSelector } from "../redux/slices/workitems";
 import Select from "react-select";
 import Logo from "../assets/logo.png";
 
-const Header = () => {
+const Header = (props) => {
   const dispatch = useDispatch();
   const { workflowItems, loading } = useSelector(workflowSelector);
   const { workItems } = useSelector(workItemsSelector);
@@ -19,7 +19,7 @@ const Header = () => {
     if (selectedOptionId === 0 && workflowItems.length > 0) {
       const selectedOption = workflowItems.filter(option => option.IsSelected === true);
       setSelectedOptionId(selectedOption[0].Id);
-      dispatch(fetchWorkItems(selectedOptionId));
+      dispatch(fetchWorkItems(selectedOption[0].Id));
     }
   }, [dispatch, selectedOptionId, workflowItems]);
 
@@ -64,6 +64,7 @@ const Header = () => {
           <h1>Advanced Workbox</h1>
         </div>
       </div>
+      {props.showFilter &&
       <div className="header__bottom row middle-xs start-xs">
         {renderQuickFilters()}
         {workflowItems.length > 0 &&
@@ -81,6 +82,7 @@ const Header = () => {
         />
         }
       </div>
+      }
     </header>
   );
 };

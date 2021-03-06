@@ -2,10 +2,10 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const Layout = ({ children }) => {
+const Layout = ({ showFilter, children }) => {
   return (
     <div className="page">
-      <Header/>
+      <Header showFilter={showFilter}/>
       <section className="content">
         {children}
       </section>
