@@ -1,5 +1,6 @@
 namespace Feature.Workbox.DI
 {
+    using Feature.Workbox.Controllers;
     using Feature.Workbox.Interfaces;
     using Feature.Workbox.Services;
     using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,8 @@ namespace Feature.Workbox.DI
         public void Configure(IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IWorkflowRepository, WorkflowRepository>();
+
+            serviceCollection.AddTransient<WorkboxApiController>();
         }
     }
 }

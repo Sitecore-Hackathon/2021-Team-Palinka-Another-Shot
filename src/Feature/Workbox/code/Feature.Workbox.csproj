@@ -66,18 +66,17 @@
     <PackageReference Include="Sitecore.Services.Infrastructure" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Controllers\WorkboxApiController.cs" />
     <Compile Include="DI\RegisterContainer.cs" />
     <Compile Include="Interfaces\IWorkflowRepository.cs" />
-    <Compile Include="Models\NextWorkflowState.cs" />
-    <Compile Include="Models\DetailedWorkflow.cs" />
-    <Compile Include="Models\WorkboxAction.cs" />
-    <Compile Include="Models\Workflow.cs" />
-    <Compile Include="Models\DetailedWorkflowState.cs" />
-    <Compile Include="Models\WorkflowItem.cs" />
-    <Compile Include="Models\WorkflowState.cs" />
-    <Compile Include="Models\Workbox.cs" />
+    <Compile Include="Models\Response\DetailedWorkflow.cs" />
+    <Compile Include="Models\Response\DetailedWorkflowState.cs" />
+    <Compile Include="Models\Response\NextWorkflowState.cs" />
+    <Compile Include="Models\Response\Workbox.cs" />
+    <Compile Include="Models\Response\WorkboxAction.cs" />
+    <Compile Include="Models\Response\Workflow.cs" />
+    <Compile Include="Models\Response\WorkflowItem.cs" />
+    <Compile Include="Models\Response\WorkflowState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterHttpRoutes.cs" />
     <Compile Include="Services\WorkflowRepository.cs" />
@@ -95,7 +94,9 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Request\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
