@@ -1,15 +1,15 @@
 ﻿---
-ID: "92182937-bfbb-45a2-97ff-8aa3ff249336"
+ID: "c50c50df-9b5f-4e90-a4be-140853dc5c62"
 Parent: "c38a9696-5d43-4a2f-9b55-35fef15b393d"
 Template: "cb01f9fc-c187-46b3-ab0b-97a8468d8303"
-Path: /sitecore/system/Workflows/Team Palinka Workflow/Pending Approval/Send to Awaiting Publish
+Path: /sitecore/system/Workflows/Team Palinka Workflow/Pending Approval/FastTrackPublish
 SharedFields:
+- ID: "82a7c02f-9a55-4bfe-b494-d1713d4be9ff"
+  Hint: Suppress Comment
+  Value: 1
 - ID: "dcbebc58-6124-4100-a248-fc717d6c78d5"
   Hint: Next state
-  Value: "{EF6CA084-E6D1-4643-ABF5-9C811F3B80B3}"
-- ID: "df36505e-a70a-4414-a9ae-ae26db86fe19"
-  Hint: Appearance Evaluator Type
-  Value: 
+  Value: "{3F8F1C98-9033-4CF8-B413-35BF2CD626F9}"
 Languages:
 - Language: en
   Versions:
@@ -17,14 +17,14 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20210306T072707Z
+      Value: 20210306T210621Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "aebde30b-66dc-41b0-8188-753ae4e82cc3"
+      Value: "4018a17b-a4ff-47ba-8d5d-0853959536cb"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20210306T210718Z
+      Value: 20210306T210740Z
