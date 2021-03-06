@@ -72,19 +72,31 @@ Provide detailed instructions on how to install the module, and include screensh
 The module does not requires any extra configuration, configuration files are using the proper Server Roles. (Standalone or Content Management) The package contains a configuration patch, which registers the http routes and IoC container, and sets the "Sitecore.Services.SecurityPolicy" to "ServicesOnPolicy" - it is required for the SPA application.
 
 ## Usage instructions
-⟹ Provide documentation about your module, how do the users use your module, where are things located, what do the icons mean, are there any secret shortcuts etc.
 
-Include screenshots where necessary. You can add images to the `./images` folder and then link to them from your documentation:
+The new Workbox application can be easily opened from the Sitecore Launchpad. (The shortcut is located in the **Content Editing** section)
+![File2](documentation/screenshots/file2.png)
 
-![Hackathon Logo](docs/images/hackathon.png?raw=true "Hackathon Logo")
+The applications allows you to select between workflows. The Workflow selector is located in the right top corner.
+![Selector](documentation/screenshots/selector.png)
 
-You can embed images of different formats too:
+After changing the workflow, the board automatically loaded. Each workflow state is represented as a column. 
+If a workflow has 3 different states, 3 columns are displayed. If a workflow has 6 states, 6 columns are displayed.
+![Columns](documentation/screenshots/columns.png)
+![Mroecolumn](documentation/screenshots/mroecolumn.png)
 
-![Deal With It](docs/images/deal-with-it.gif?raw=true "Deal With It")
+Every item is displayed in a card. The most relevant information are displayed, such as ItemName, Language, Latest Version Number and Last Updated Date and Last Updated By. 
+Besides displaying the information, you can open the item directly in Content Editor in the target language.
 
-And you can embed external images too:
+The item name is clickable, if you click on it, a detail page opens with other relevant information.
+![Card](documentation/screenshots/card.png)
 
-![Random](https://thiscatdoesnotexist.com/)
+The item card is draggable and you can move items into other state. You can only target columns which are allowed for the current workflow. 
+
+If you drop the card in a new column, you may be prompted to enter a comment. The comment box visibilty depends on the current workflow action "Suppress Comment" checkbox.
+![Da](documentation/screenshots/da.png)
+
+**The detail page**
 
 ## Comments
-If you'd like to make additional comments that is important for your module entry.
+The model takes into the consideration security rules and the built in Sitecore Workflow command visiblity evaluation logic.
+

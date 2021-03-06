@@ -1,12 +1,15 @@
 ﻿---
-ID: "ab021db5-3aa8-4cd1-ae95-af56c85bb534"
-Parent: "67d5069b-f10e-4cdd-9ae1-68f4690c5bd5"
+ID: "e34b4050-4271-4f1b-8b68-a52520d4eb37"
+Parent: "bb54c361-2673-40a1-aafe-8eeadfc27989"
 Template: "30174139-74a1-45dc-91d8-c5a122f37d5e"
-Path: /sitecore/content/Home/1/Sample 2
+Path: /sitecore/content/Home/PalinkaWF/Copy of DraftPalinka 3
 SharedFields:
 - ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
   Hint: __Workflow
-  Value: "{A5BC37E7-ED96-4C1E-8590-A26E64DB55EA}"
+  Value: "{3A23C93A-F50F-45A8-A503-C9E744018B83}"
+- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
+  Hint: __Default workflow
+  Value: "{3A23C93A-F50F-45A8-A503-C9E744018B83}"
 Languages:
 - Language: en
   Versions:
@@ -14,20 +17,20 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20210306T075845Z
+      Value: 20210306T160855Z
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: "{FCA998C5-0CC3-4F91-94D8-0A4E6CAECE88}"
+      Value: "{3F8F1C98-9033-4CF8-B413-35BF2CD626F9}"
     - ID: "5625c431-8269-45e7-8195-a4d8af229074"
       Hint: Title
-      Value: Sample 2
+      Value: DraftPalinka
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "9d5cae35-58fb-4542-acd5-d8ae3a8e88ad"
+      Value: "e19e5f48-dae3-420a-acc8-106136421a21"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20210306T191114Z
+      Value: 20210306T210747Z
