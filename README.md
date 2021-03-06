@@ -19,7 +19,7 @@
 ## Video link
 ⟹ Demo Video
 
-⟹ [Replace this Video link](#video-link)
+⟹ [Replace this Video link](https://www.youtube.com/watch?v=YPDpw12GXhk&ab_channel=Mih%C3%A1ly%C3%81rvai)
 
 ## Pre-requisites and Dependencies
 
