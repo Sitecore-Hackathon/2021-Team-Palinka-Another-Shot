@@ -26,5 +26,27 @@
             /// </summary>
             public const string WorkflowRootFolderId = "{05592656-56D7-4D85-AACF-30919EE494F9}";
         }
+
+        /// <summary>
+        /// Struct DeviceIds
+        /// </summary>
+        public struct DeviceIds
+        {
+            /// <summary>
+            /// The default device identifier
+            /// </summary>
+            public const string DefaultDeviceId = "{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}";
+        }
+
+        /// <summary>
+        /// Struct Languages
+        /// </summary>
+        public struct Languages
+        {
+            /// <summary>
+            /// The en language
+            /// </summary>
+            public const string En = "en";
+        }
     }
 }

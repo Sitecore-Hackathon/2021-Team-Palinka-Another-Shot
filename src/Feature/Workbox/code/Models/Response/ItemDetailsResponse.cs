@@ -8,6 +8,12 @@
     /// </summary>
     public class ItemDetailsResponse
     {
+        public ItemDetailsResponse()
+        {
+            this.PersonalizedRenderings = new List<PersonalizationDetailResponse>();
+            this.MultiVariateTestedRenderings = new List<MultiVariateTestDetailResponse>();
+        }
+
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -85,5 +91,17 @@
         /// </summary>
         /// <value>The history.</value>
         public List<WorkflowHistoryResponse> History { get; set; }
+
+        /// <summary>
+        /// Gets or sets the personalized renderings.
+        /// </summary>
+        /// <value>The personalized renderings.</value>
+        public List<PersonalizationDetailResponse> PersonalizedRenderings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the multi variate tested renderings.
+        /// </summary>
+        /// <value>The multi variate tested renderings.</value>
+        public List<MultiVariateTestDetailResponse> MultiVariateTestedRenderings { get; set; }
     }
 }

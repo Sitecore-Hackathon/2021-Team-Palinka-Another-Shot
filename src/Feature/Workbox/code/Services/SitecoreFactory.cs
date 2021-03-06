@@ -3,6 +3,9 @@
     using Feature.Workbox.Interfaces;
     using Sitecore.Configuration;
     using Sitecore.Data;
+    using Sitecore.Data.Items;
+    using Sitecore.Globalization;
+    using Sitecore.SecurityModel;
 
     /// <summary>
     /// Class SitecoreFactory.
@@ -19,6 +22,24 @@
         public Database GetDatabase(string databaseName)
         {
             return Factory.GetDatabase(databaseName);
+        }
+
+        /// <summary>
+        /// Gets the default device.
+        /// </summary>
+        /// <returns>The default DeviceItem.</returns>
+        public DeviceItem GetDefaultDevice()
+        {
+            using (new SecurityDisabler())
+            {
+                using (new LanguageSwitcher(Language.Parse(Constants.Languages.En)))
+                {
+                    using (new DatabaseSwitcher(Factory.GetDatabase(Constants.Databases.Master)))
+                    {
+                        return Sitecore.Context.Database.GetItem(new ID(Constants.DeviceIds.DefaultDeviceId));
+                    }
+                }
+            }
         }
     }
 }

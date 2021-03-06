@@ -130,6 +130,27 @@
             response.CreatedBy = item.Statistics.CreatedBy;
             response.FullPath = item.Paths.FullPath;
 
+            var defaultDevice = this._sitecoreFactory.GetDefaultDevice();
+
+            foreach(var rendering in item.Visualization.GetRenderings(defaultDevice, false))
+            {
+                if (!string.IsNullOrEmpty(rendering.Settings.PersonalizationTest))
+                {
+                    response.PersonalizedRenderings.Add(new PersonalizationDetailResponse
+                    {
+                        RenderingName = rendering.WebEditDisplayName
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(rendering.Settings.MultiVariateTest))
+                {
+                    response.MultiVariateTestedRenderings.Add(new MultiVariateTestDetailResponse
+                    {
+                        RenderingName = rendering.WebEditDisplayName
+                    });
+                }
+            }
+
             var history = this._workflowRepository.GetHistory(item);
 
             response.History = history.Select(this.LoadHistoryRecord).ToList();

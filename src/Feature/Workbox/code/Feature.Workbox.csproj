@@ -81,6 +81,8 @@
     <Compile Include="Models\Response\DetailedWorkflowState.cs" />
     <Compile Include="Models\Response\ItemDetailsResponse.cs" />
     <Compile Include="Models\Response\NextWorkflowState.cs" />
+    <Compile Include="Models\Response\MultiVariateTestDetailResponse.cs" />
+    <Compile Include="Models\Response\PersonalizationDetailResponse.cs" />
     <Compile Include="Models\Response\Workbox.cs" />
     <Compile Include="Models\Response\WorkboxAction.cs" />
     <Compile Include="Models\Response\Workflow.cs" />
