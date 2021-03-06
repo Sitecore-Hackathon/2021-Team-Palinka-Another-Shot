@@ -96,6 +96,15 @@ If you drop the card in a new column, you may be prompted to enter a comment. Th
 ![Da](documentation/screenshots/da.png)
 
 **The detail page**
+The detail page displays other relevant informations about the item which might be useful for the editor.
+The detail page contains
+- Item Full Path
+- Item ID
+- Item Template name and Id
+- The language and the version number
+- The full workflow history
+- Displays if the item has a rendering with configured Personalization or Multi variate test
+- 
 
 ## Comments
 The model takes into the consideration security rules and the built in Sitecore Workflow command visiblity evaluation logic.
