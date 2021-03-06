@@ -170,10 +170,6 @@ const Board = () => {
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
 
-    const realDraggableId = getRealId(draggableId);
-    const realSourceDroppableId = getRealId(source.droppableId);
-    const realDestinationDroppableId = getRealId(destination.droppableId);
-
     setEnabledIds([0, []]);
 
     if (!destination) {
@@ -186,6 +182,10 @@ const Board = () => {
     ) {
       return;
     }
+
+    const realDraggableId = getRealId(draggableId);
+    const realSourceDroppableId = getRealId(source.droppableId);
+    const realDestinationDroppableId = getRealId(destination.droppableId);
 
     setLoading(true);
 
@@ -210,7 +210,7 @@ const Board = () => {
       "ItemId": draggableId,
       "CommandId": actionId,
       "Comment": comment,
-      "Language": "en",
+      "Language": language,
     })).then(data => {
       if (data.IsSuccess === true) {
         updateBoardStates(destination, source, draggableId);
