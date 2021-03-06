@@ -56,3 +56,5 @@ packages/
 /.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/plugin/Sitecore.DevEx.Serialization.dll
 /.sitecore/package-cache/nuget/Sitecore.DevEx.Extensibility.Serialization.3.0.0/sitecore.myget.licence.md
 /.vscode
+packages/
+.idea
