@@ -1,0 +1,203 @@
+{
+    "Id": "{A5BC37E7-ED96-4C1E-8590-A26E64DB55EA}",
+    "Name": "Sample Workflow",
+    "States": [
+        {
+            "Id": "{190B1C84-F1BE-47ED-AA41-F42193D9C8FC}",
+            "Name": "Draft",
+            "IsFinal": false,
+            "Items": [
+                {
+                    "Name": "Sample 2",
+                    "ID": "{5F41630B-2788-4622-B05F-CF298FBB2C2A}",
+                    "TemplateName": "Sample 2",
+                    "LastUpdated": "2021-03-06T07:58:54Z",
+                    "LastUpdatedBy": "sitecore\\Admin",
+                    "Language": "en",
+                    "NextStates": [
+                        {
+                            "Id": "{46DA5376-10DC-4B66-B464-AFDAA29DE84F}",
+                            "Name": "Awaiting Approval",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Submit",
+                                    "ID": "{CF6A557D-0B86-4432-BF47-302A18238E74}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "{46DA5376-10DC-4B66-B464-AFDAA29DE84F}",
+            "Name": "Awaiting Approval",
+            "IsFinal": false,
+            "Items": [
+                {
+                    "Name": "Home",
+                    "ID": "{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}",
+                    "TemplateName": "Sample Item",
+                    "LastUpdated": "2021-03-06T05:39:33Z",
+                    "LastUpdatedBy": "sitecore\\Admin",
+                    "Language": "en",
+                    "NextStates": [
+                        {
+                            "Id": "{FCA998C5-0CC3-4F91-94D8-0A4E6CAECE88}",
+                            "Name": "Approved",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Approve",
+                                    "ID": "{F744CC9C-4BB1-4B38-8D5C-1E9CE7F45D2D}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        },
+                        {
+                            "Id": "{190B1C84-F1BE-47ED-AA41-F42193D9C8FC}",
+                            "Name": "Draft",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Reject",
+                                    "ID": "{E44F2D64-1EED-42FF-A7DA-C07B834096AC}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Name": "1",
+                    "ID": "{67D5069B-F10E-4CDD-9AE1-68F4690C5BD5}",
+                    "TemplateName": "Sample Item",
+                    "LastUpdated": "2021-03-06T10:20:27Z",
+                    "LastUpdatedBy": "sitecore\\Admin",
+                    "Language": "en",
+                    "NextStates": [
+                        {
+                            "Id": "{FCA998C5-0CC3-4F91-94D8-0A4E6CAECE88}",
+                            "Name": "Approved",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Approve",
+                                    "ID": "{F744CC9C-4BB1-4B38-8D5C-1E9CE7F45D2D}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        },
+                        {
+                            "Id": "{190B1C84-F1BE-47ED-AA41-F42193D9C8FC}",
+                            "Name": "Draft",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Reject",
+                                    "ID": "{E44F2D64-1EED-42FF-A7DA-C07B834096AC}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Name": "3",
+                    "ID": "{7BEE1C0B-48D2-4D84-9626-9A5EEF2D326C}",
+                    "TemplateName": "Sample Item",
+                    "LastUpdated": "2021-03-06T06:54:40Z",
+                    "LastUpdatedBy": "sitecore\\Admin",
+                    "Language": "en",
+                    "NextStates": [
+                        {
+                            "Id": "{FCA998C5-0CC3-4F91-94D8-0A4E6CAECE88}",
+                            "Name": "Approved",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Approve",
+                                    "ID": "{F744CC9C-4BB1-4B38-8D5C-1E9CE7F45D2D}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        },
+                        {
+                            "Id": "{190B1C84-F1BE-47ED-AA41-F42193D9C8FC}",
+                            "Name": "Draft",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Reject",
+                                    "ID": "{E44F2D64-1EED-42FF-A7DA-C07B834096AC}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Name": "Sample 2",
+                    "ID": "{AB021DB5-3AA8-4CD1-AE95-AF56C85BB534}",
+                    "TemplateName": "Sample 2",
+                    "LastUpdated": "2021-03-06T07:58:50Z",
+                    "LastUpdatedBy": "sitecore\\Admin",
+                    "Language": "en",
+                    "NextStates": [
+                        {
+                            "Id": "{FCA998C5-0CC3-4F91-94D8-0A4E6CAECE88}",
+                            "Name": "Approved",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Approve",
+                                    "ID": "{F744CC9C-4BB1-4B38-8D5C-1E9CE7F45D2D}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        },
+                        {
+                            "Id": "{190B1C84-F1BE-47ED-AA41-F42193D9C8FC}",
+                            "Name": "Draft",
+                            "IsFinal": false,
+                            "Actions": [
+                                {
+                                    "Name": "Reject",
+                                    "ID": "{E44F2D64-1EED-42FF-A7DA-C07B834096AC}",
+                                    "SuppressComment": false
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "{FCA998C5-0CC3-4F91-94D8-0A4E6CAECE88}",
+            "Name": "Approved",
+            "IsFinal": true,
+            "Items": [
+                {
+                    "Name": "2",
+                    "ID": "{44A0AE9C-A6E2-4B57-A98F-7590C7A847C5}",
+                    "TemplateName": "Sample Item",
+                    "LastUpdated": "2021-03-06T06:54:48Z",
+                    "LastUpdatedBy": "sitecore\\Admin",
+                    "Language": "en",
+                    "NextStates": []
+                }
+            ]
+        }
+    ],
+    "QuickFilters": {
+        "TemplateName": [
+            "Sample 2",
+            "Sample Item"
+        ],
+        "LastUpdatedBy": [
+            "sitecore\\Admin"
+        ]
+    }
+}

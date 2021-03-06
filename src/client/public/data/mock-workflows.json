@@ -1,0 +1,144 @@
+[
+    {
+        "Id": "{2BAE793F-7392-4790-9E67-9C60B6BF7D7B}",
+        "Name": "Analytics Testing Workflow",
+        "States": [
+            {
+                "Id": "{0649FDB7-3E01-4543-9D70-DE0F8CCB5304}",
+                "Name": "Draft",
+                "IsFinal": false
+            },
+            {
+                "Id": "{1789B344-EA1D-4DF7-BA53-1BB2814F7A5A}",
+                "Name": "Deployed",
+                "IsFinal": true
+            },
+            {
+                "Id": "{C2FACD40-0C4F-4D74-828F-2C936ED8B290}",
+                "Name": "Completed",
+                "IsFinal": false
+            },
+            {
+                "Id": "{83C8A0BD-BBAD-4D21-B20A-F0E4517466EE}",
+                "Name": "Cancelled",
+                "IsFinal": false
+            },
+            {
+                "Id": "{6AD8191F-2FAD-4668-8C5F-79BD6FAC681C}",
+                "Name": "Suspended",
+                "IsFinal": false
+            }
+        ],
+        "IsSelected": true
+    },
+    {
+        "Id": "{689E2994-4656-4C58-9112-7826CB46EE69}",
+        "Name": "Analytics Workflow",
+        "States": [
+            {
+                "Id": "{39156DC0-21C6-4F64-B641-31E85C8F5DFE}",
+                "Name": "Draft",
+                "IsFinal": false
+            },
+            {
+                "Id": "{EDCBB550-BED3-490F-82B8-7B2F14CCD26E}",
+                "Name": "Deployed",
+                "IsFinal": true
+            }
+        ],
+        "IsSelected": false
+    },
+    {
+        "Id": "{B879D176-4226-4C74-9ED4-6E61E813CBF7}",
+        "Name": "Path Analyzer Maps",
+        "States": [
+            {
+                "Id": "{03A42A18-472E-4FDC-A5BC-8D836336F0F4}",
+                "Name": "Inactive",
+                "IsFinal": false
+            },
+            {
+                "Id": "{C0DA66F8-4371-412B-B716-648DA4657459}",
+                "Name": "Initializing",
+                "IsFinal": false
+            },
+            {
+                "Id": "{D86A72B4-7C3D-447E-9622-66B0DC1243F8}",
+                "Name": "Deployed",
+                "IsFinal": true
+            }
+        ],
+        "IsSelected": false
+    },
+    {
+        "Id": "{A5BC37E7-ED96-4C1E-8590-A26E64DB55EA}",
+        "Name": "Sample Workflow",
+        "States": [
+            {
+                "Id": "{190B1C84-F1BE-47ED-AA41-F42193D9C8FC}",
+                "Name": "Draft",
+                "IsFinal": false
+            },
+            {
+                "Id": "{46DA5376-10DC-4B66-B464-AFDAA29DE84F}",
+                "Name": "Awaiting Approval",
+                "IsFinal": false
+            },
+            {
+                "Id": "{FCA998C5-0CC3-4F91-94D8-0A4E6CAECE88}",
+                "Name": "Approved",
+                "IsFinal": true
+            }
+        ],
+        "IsSelected": false
+    },
+    {
+        "Id": "{933DFBF3-3D97-4FF7-9F5E-74579BD1A219}",
+        "Name": "Segment",
+        "States": [
+            {
+                "Id": "{69C53BD8-A79F-4A91-BA4F-813241EE8E88}",
+                "Name": "Inactive",
+                "IsFinal": false
+            },
+            {
+                "Id": "{E39E0ADC-9487-4BA4-950D-1993D5614B8E}",
+                "Name": "Initializing",
+                "IsFinal": false
+            },
+            {
+                "Id": "{3C70E8B1-D6D2-42CC-8E21-1AE8EC72A0FB}",
+                "Name": "Deployed",
+                "IsFinal": true
+            }
+        ],
+        "IsSelected": false
+    },
+    {
+        "Id": "{3A23C93A-F50F-45A8-A503-C9E744018B83}",
+        "Name": "Team Palinka Workflow",
+        "States": [
+            {
+                "Id": "{4989D9A4-FC54-4670-8871-5A35BC6B3D3C}",
+                "Name": "Draft",
+                "IsFinal": false
+            },
+            {
+                "Id": "{C38A9696-5D43-4A2F-9B55-35FEF15B393D}",
+                "Name": "Pending Approval",
+                "IsFinal": false
+            },
+            {
+                "Id": "{EF6CA084-E6D1-4643-ABF5-9C811F3B80B3}",
+                "Name": "Pending Publish",
+                "IsFinal": false
+            },
+            {
+                "Id": "{3F8F1C98-9033-4CF8-B413-35BF2CD626F9}",
+                "Name": "Published",
+                "IsFinal": true
+            }
+        ],
+        "IsSelected": false
+    }
+]
