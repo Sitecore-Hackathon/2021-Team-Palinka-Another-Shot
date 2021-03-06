@@ -1,0 +1,13 @@
+{
+    "namespace": "Items",
+    "items" : {
+        "includes": [
+             {
+                "name": "sampleworkbox",
+                "path": "/sitecore/system/Workflows/Team Palinka Workflow",
+                "scope": "ItemAndDescendants"
+            }
+
+        ]
+    }
+}
