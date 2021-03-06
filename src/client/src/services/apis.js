@@ -12,3 +12,10 @@ export function getWorkflowDetails() {
   return '/sitecore/api/ssc/workbox/detail/{workflowid}';
 }
 
+export function getItemDetails() {
+  if (process.env.NODE_ENV !== 'production') {
+    return `${process.env.PUBLIC_URL}/data/mock-item-details.json`;
+  }
+  return '/sitecore/api/ssc/workbox/itemdetail?itemId={itemId}&language={language}';
+}
+

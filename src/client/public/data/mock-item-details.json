@@ -1,0 +1,57 @@
+{
+  "Name": "Home",
+  "FullPath": "/sitecore/content/Home",
+  "Id": "{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}",
+  "Language": "en",
+  "TemplateName": "Sample Item",
+  "TemplateId": "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}",
+  "Created": "2008-04-07T10:59:00Z",
+  "CreatedBy": "sitecore\\Admin",
+  "Updated": "2021-03-06T14:41:05Z",
+  "UpdatedBy": "sitecore\\Admin",
+  "IsSuccess": true,
+  "Message": null,
+  "History": [
+    {
+      "Date": "2021-03-06T05:39:33.453Z",
+      "NewState": "{46DA5376-10DC-4B66-B464-AFDAA29DE84F}",
+      "NewStateName": "Awaiting Approval",
+      "OldState": "{190B1C84-F1BE-47ED-AA41-F42193D9C8FC}",
+      "OldStateName": "Draft",
+      "User": "sitecore\\Admin",
+      "CommentFields": [
+        {
+          "Key": "Comments",
+          "Value": ""
+        }
+      ]
+    },
+    {
+      "Date": "2021-03-06T13:18:17.41Z",
+      "NewState": "{FCA998C5-0CC3-4F91-94D8-0A4E6CAECE88}",
+      "NewStateName": "Approved",
+      "OldState": "{46DA5376-10DC-4B66-B464-AFDAA29DE84F}",
+      "OldStateName": "Awaiting Approval",
+      "User": "sitecore\\Admin",
+      "CommentFields": [
+        {
+          "Key": "Comments",
+          "Value": "asdadddd"
+        }
+      ]
+    }
+  ],
+  "PersonalizedRenderings": [
+    {
+      "RenderingName": "Sample Inner Sublayout"
+    },
+    {
+      "RenderingName": "Sample Rendering"
+    }
+  ],
+  "MultiVariateTestedRenderings": [
+    {
+      "RenderingName": "Sample Inner Sublayout"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch, useLocation } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import "./App.scss";
+import Detailpage from "./pages/Detailpage";
 
 const App = () => {
   return (
@@ -9,6 +10,9 @@ const App = () => {
       <Switch>
         <Route exact path="/sitecore/shell/client/Applications/advancedworkbox">
           <Homepage/>
+        </Route>
+        <Route path="/sitecore/shell/client/Applications/advancedworkbox/detail/:id">
+          <Detailpage/>
         </Route>
         <Route path="*">
           <NoMatch/>
