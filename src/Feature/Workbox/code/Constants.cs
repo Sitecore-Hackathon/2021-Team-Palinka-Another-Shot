@@ -59,5 +59,16 @@
             /// </summary>
             public const string En = "en";
         }
+
+        /// <summary>
+        /// Struct StandardFieldNames
+        /// </summary>
+        public struct StandardFieldNames
+        {
+            /// <summary>
+            /// The workflow state field
+            /// </summary>
+            public const string WorkflowState = "__Workflow state";
+        }
     }
 }

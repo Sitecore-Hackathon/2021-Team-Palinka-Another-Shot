@@ -1,6 +1,7 @@
 ﻿namespace Feature.Workbox.Services
 {
     using Feature.Workbox.Interfaces;
+    using Feature.Workbox.Models.Memory;
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
     using Feature.Workbox.Models.Search;
@@ -39,6 +40,11 @@
         /// The master database
         /// </summary>
         private readonly Database _masterDatabase;
+
+        /// <summary>
+        /// The items in wrong state
+        /// </summary>
+        private List<MemoryStoreItem> itemsInWrongState = new List<MemoryStoreItem>();
 
         public WorkflowRepository(IWorkflowLogger logger, ISitecoreFactory sitecoreFactory)
         {
@@ -100,10 +106,71 @@
                                     NextStates = GetNextStates(item, wfState)
                                 };
 
-                                state.Items.Add(workflowItem);
+                                var currentDbState = item[Constants.StandardFieldNames.WorkflowState];
+                                if (currentDbState.Equals(wfState.ID.ToString(), StringComparison.OrdinalIgnoreCase))
+                                {
+                                    state.Items.Add(workflowItem);
+                                }
+                                else
+                                {
+                                    // State is not matching in the index and in the db, maybe due to the async indexing operations
+                                    // We still need to ensure the proper state
+                                    var previousState = response.States.FirstOrDefault(t => t.Id.Equals(currentDbState));
+                                    if (previousState != null)
+                                    {
+                                        // Item state should point to a previous state
+                                        previousState.Items.Add(new WorkflowItem()
+                                        {
+                                            ID = item.ID.ToString(),
+                                            Name = item.Name,
+                                            Language = resultItem.Document.Language ?? string.Empty,
+                                            LastUpdated = item.Statistics?.Updated ?? DateTime.MinValue,
+                                            LastUpdatedBy = item.Statistics?.UpdatedBy ?? string.Empty,
+                                            TemplateName = item.TemplateName,
+                                            HasLayout = item.Visualization?.Layout != null,
+                                            CurrentVersion = item.Version.Number,
+                                            Icon = GetIconUrl(item),
+                                            NextStates = GetNextStates(item, this.GetItem(currentDbState))
+                                        }) ;
+                                    }
+                                    else
+                                    {
+                                        // Item 
+                                        itemsInWrongState.Add(new MemoryStoreItem
+                                        {
+                                            ItemId = item.ID.ToString(),
+                                            State = currentDbState,
+                                            Language = item.Language.Name
+                                        });
+                                    }
+                                }
+                                
                             }
                         }
 
+                        foreach (var itemInWrongState in itemsInWrongState.Where(t => t.State.Equals(state.Id)))
+                        {
+                            var item = this._masterDatabase.GetItem(itemInWrongState.ItemId, Language.Parse(itemInWrongState.Language));
+
+                            if (item != null)
+                            {
+                                var workflowItem = new WorkflowItem()
+                                {
+                                    ID = item.ID.ToString(),
+                                    Name = item.Name,
+                                    Language = item.Language?.Name ?? string.Empty,
+                                    LastUpdated = item.Statistics?.Updated ?? DateTime.MinValue,
+                                    LastUpdatedBy = item.Statistics?.UpdatedBy ?? string.Empty,
+                                    TemplateName = item.TemplateName,
+                                    HasLayout = item.Visualization?.Layout != null,
+                                    CurrentVersion = item.Version.Number,
+                                    Icon = GetIconUrl(item),
+                                    NextStates = GetNextStates(item, wfState)
+                                };
+
+                                state.Items.Add(workflowItem);
+                            }
+                        }
                         response.States.Add(state);
                     }
                 }

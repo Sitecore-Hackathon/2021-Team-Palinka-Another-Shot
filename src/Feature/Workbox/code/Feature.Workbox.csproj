@@ -75,6 +75,7 @@
     <Compile Include="Interfaces\IWorkflowLogger.cs" />
     <Compile Include="Interfaces\IWorkflowRepository.cs" />
     <Compile Include="Interfaces\IWorkflowService.cs" />
+    <Compile Include="Models\Memory\MemoryStoreItem.cs" />
     <Compile Include="Models\Request\ChangeWorkflowRequest.cs" />
     <Compile Include="Models\Response\ChangeWorkflowResponse.cs" />
     <Compile Include="Models\Response\DetailedWorkflow.cs" />

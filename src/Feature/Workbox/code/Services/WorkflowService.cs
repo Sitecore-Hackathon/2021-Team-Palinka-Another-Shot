@@ -4,8 +4,6 @@
     using Feature.Workbox.Models.Request;
     using Feature.Workbox.Models.Response;
     using Feature.Workbox.Models.Response.Response;
-    using Sitecore.ContentSearch;
-    using Sitecore.Data.Items;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -57,7 +55,7 @@
                 IsSuccess = false
             };
 
-            var item = this._workflowRepository.GetItem(request.ItemId);
+            var item = this._workflowRepository.GetItem(request.ItemId, request.Language);
 
             Sitecore.Workflows.IWorkflow wf = this._workflowRepository.GetWorkflow(item);
 
@@ -69,7 +67,6 @@
 
                     response.IsSuccess = result.Succeeded;
                     response.Message = result.Message;
-                    this.ForceIndexUpdate(item);
                 }
                 catch (Exception ex)
                 {
@@ -161,18 +158,6 @@
         public List<Workflow> GetWorkflows()
         {
             return this._workflowRepository.GetWorkflows();
-        }
-
-        /// <summary>
-        /// Forces the index update for the newly updated item.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        private void ForceIndexUpdate(Item item)
-        {
-            using (var index = ContentSearchManager.GetIndex(Constants.IndexNames.SitecoreMasterIndex))
-            {
-                index.Refresh(new SitecoreIndexableItem(item));
-            }
         }
 
         /// <summary>

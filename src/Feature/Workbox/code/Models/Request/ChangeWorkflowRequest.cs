@@ -22,5 +22,11 @@
         /// </summary>
         /// <value>The comment.</value>
         public string Comment { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language.
+        /// </summary>
+        /// <value>The language.</value>
+        public string Language { get; set; }
     }
 }
