@@ -62,7 +62,7 @@
 
             List<Item> items = new List<Item>();
 
-            var index = ContentSearchManager.GetIndex("sitecore_master_index");
+            var index = ContentSearchManager.GetIndex(Constants.IndexNames.SitecoreMasterIndex);
             if (index != null)
             {
                 foreach (var wfState in wfItem.Children.Where(t => t.TemplateID == Templates.WorkflowState.TemplateId))
@@ -82,7 +82,7 @@
 
                         foreach (var resultItem in searchResultItems.Hits)
                         {
-                            var item = Factory.GetDatabase("master").GetItem(resultItem.Document.ItemId, Language.Parse(resultItem.Document.Language));
+                            var item = this._masterDatabase.GetItem(resultItem.Document.ItemId, Language.Parse(resultItem.Document.Language));
 
                             if (item != null)
                             {
@@ -154,7 +154,6 @@
         public List<Workflow> GetWorkflows()
         {
             var result = new List<Workflow>();
-            int i = 0;
             using (new SecurityDisabler())
             {
                 using (new DatabaseSwitcher(Factory.GetDatabase(Constants.Databases.Master)))
@@ -167,7 +166,7 @@
                         {
                             Id = wfItem.ID.ToString(),
                             Name = wfItem.Name,
-                            IsSelected = i == 0 // TODO: Change it
+                            IsSelected = result.Count() == 0
                         };
 
                         foreach (var wfState in wfItem.Children.Where(t => t.TemplateID == Templates.WorkflowState.TemplateId))
@@ -183,7 +182,6 @@
                         }
 
                         result.Add(workflow);
-                        i++;
                     }
                 }
             }
